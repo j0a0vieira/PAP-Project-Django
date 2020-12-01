@@ -8,4 +8,4 @@ def my_profile_view(request):
         'obj': obj,
     }
 
-    return render(request, 'perfil/myprofile.html', context)
+    return render(request, 'perfil/myprofile.html', contex)
