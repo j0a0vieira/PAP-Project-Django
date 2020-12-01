@@ -1,9 +1,24 @@
-{% extends 'base.html %}
+{% extends 'base.html' %}
 
 {% block title %}
 my profile
 {% endblock title %}
 
 {% block content %}
-<h1>my profile</h1>
+<h1>my profile - {{obj}}</h1>
+<hr>
+<img src={{obj.avatar.url}}>
+<br>
+{{obj.first_name}} {{obj.last_name}}
+<br>
+{{obj.bio}}
+<br>
+{{obj.country}}
+<br>
+<ul>
+{% for friend in obj.get_friends %}
+    <li>{{friend}}</li>
+{% endfor %}
+</ul>
+<hr>
 {% endblock content %}
