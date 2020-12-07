@@ -5,20 +5,42 @@ my profile
 {% endblock title %}
 
 {% block content %}
-<h1>my profile - {{obj}}</h1>
-<hr>
-<img src={{obj.avatar.url}}>
-<br>
-{{obj.first_name}} {{obj.last_name}}
-<br>
-{{obj.bio}}
-<br>
-{{obj.country}}
-<br>
-<ul>
-{% for friend in obj.get_friends %}
-    <li>{{friend}}</li>
-{% endfor %}
-</ul>
-<hr>
+    <h1>my profile - {{obj}}</h1>
+
+<!-- MODAL -->
+        <div class="ui modal">
+      <i class="close icon"></i>
+      <div class="header">Update you profile</div>
+      <div class="image content">
+        <div class="ui medium image">
+          <img src="/images/avatar/large/chris.jpg">
+        </div>
+        <div class="description">
+          <div class="ui header">Add some new information about you! :)</div>
+            </div>
+          </div>
+            <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form}}
+
+              <div class="actions">
+                <button type="submit" class="ui positive right labeled icon button">
+                  Update
+                  <i class="checkmark icon"></i>
+                </button>
+          </form>
+      </div>
+    </div>
+
+<!-- ------------------- -->
+
+
+{% if confirm %}
+<div class="ui green message">Profile updated successfuly!</div>
+{% endif %}
+
+<button class="ui sencondary button" id="modal-btn">Update profile</button>
+
+
+
 {% endblock content %}
