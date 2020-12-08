@@ -6,4 +6,3 @@ app_name = 'perfil'
 urlpatterns = [
     path('myprofile/', my_profile_view, name="my-profile-view")
 ]
-

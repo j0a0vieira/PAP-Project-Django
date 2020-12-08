@@ -5,42 +5,73 @@ my profile
 {% endblock title %}
 
 {% block content %}
-    <h1>my profile - {{obj}}</h1>
+<h1>my profile - {{obj}}</h1>
 
-<!-- MODAL -->
-        <div class="ui modal">
-      <i class="close icon"></i>
-      <div class="header">Update you profile</div>
-      <div class="image content">
-        <div class="ui medium image">
-          <img src="/images/avatar/large/chris.jpg">
-        </div>
-        <div class="description">
-          <div class="ui header">Add some new information about you! :)</div>
-            </div>
-          </div>
-            <form action="" method="POST" class="ui form" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{form}}
-
-              <div class="actions">
-                <button type="submit" class="ui positive right labeled icon button">
-                  Update
-                  <i class="checkmark icon"></i>
-                </button>
-          </form>
-      </div>
-    </div>
-
-<!-- ------------------- -->
+<!-- MODAL FORM INICIO -->
+<div class="ui modal mymodal">
+	<i class="close icon"></i>
+	<div class="header">
+		Update your profile
+	</div>
+	<div class="image content">
+		<div class="ui medium image">
+			<img src="{{obj.avatar.url}}">
+		</div>
+		<div class="description">
+			<div class="ui header">Provide some more information about you :)</div>
+			<form action="" method="POST" class="ui form" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+		</div>
+	</div>
+	<div class="actions">
+		<button type="submit" class="ui positive right labeled icon button">
+			Update
+			<i class="checkmark icon"></i>
+		</button>
+		</form>
+	</div>
+</div>
+<!-- MODAL FORM FIM -->
 
 
 {% if confirm %}
 <div class="ui green message">Profile updated successfuly!</div>
 {% endif %}
 
-<button class="ui sencondary button" id="modal-btn">Update profile</button>
 
+<div class="ui segment max-content-width right">
+	<h3>{{obj.username}}</h3>
+	<div class="ui grid">
+		<div class="row">
+			<div class="six wide column">
+				<img class="ui medium rounded image" src="{{obj.avatar.url}}">
+				<div class="row mt-10">
+					<button class="ui sencondary button" id="modal-btn">Update profile</button>
+				</div>
+			</div>
+			<div class="ten wide column">
+				<table class="ui table">
+					<tbody>
+					<tr>
+						<td>First Name</td>
+						<td>{{obj.first_name}}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{{obj.last_name}}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{{obj.last_name}}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
 
 
 {% endblock content %}

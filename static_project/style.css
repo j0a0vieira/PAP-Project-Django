@@ -11,3 +11,21 @@ body {
 .mb-7 {
     margin-bottom: 7px !important;
 }
+
+.mt-10 {
+    margin-top: 10px !important;
+}
+
+.mymodal {
+    height: 300px !important;
+    top: 200px !important;
+    font-size: 20px !important;
+}
+
+.max-content-width {
+    width: max-content;
+}
+
+.right {
+    float: right;
+}
