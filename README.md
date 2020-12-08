@@ -4,7 +4,7 @@ Tenho aqui alojado o meu código da rede social Django.
 
 Expectativas para o 1º Protótipo:
   - Página de Boas-Vindas a não utilizadores
-  - Login/Register com respetivo design
+  - Página de perfil do utilizador
   - Publicação de posts
 
 A base de dados em Django é escrita dentro dos ficheiros models.py,
