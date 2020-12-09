@@ -16,6 +16,10 @@ body {
     margin-top: 10px !important;
 }
 
+.w-small {
+    width: 3%;
+}
+
 .mymodal {
     height: 300px !important;
     top: 200px !important;
@@ -29,3 +33,6 @@ body {
 .right {
     float: right;
 }
+
+
+

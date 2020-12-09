@@ -9,7 +9,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=25)
     username = models.OneToOneField(User, on_delete=models.CASCADE) #se user for apagado, username também é
     bio = models.TextField(default="write something beautiful about you :)", max_length=300)
-    email = models.EmailField(max_length=200, blank=True)
+    email = models.EmailField(max_length=200)
     country = models.CharField(max_length=25)
     avatar = models.ImageField(default = "avatar.png", upload_to = '')
     friends = models.ManyToManyField(User, blank=True, related_name='friends')
@@ -22,6 +22,10 @@ class Profile(models.Model):
 
     def get_friends_no(self):
         return self.friends.count()
+
+    def updated_str(self):
+        new_updated = self.updated.strftime('%d-%m-%y')
+        return new_updated
 
     def __str__(self):
         return f"{self.username} ----- {self.created.strftime('%d-%m-%y')}"

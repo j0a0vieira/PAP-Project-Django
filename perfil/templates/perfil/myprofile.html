@@ -9,30 +9,60 @@ my profile
 
 <!-- MODAL FORM INICIO -->
 <div class="ui modal mymodal">
-	<i class="close icon"></i>
-	<div class="header">
-		Update your profile
-	</div>
-	<div class="image content">
-		<div class="ui medium image">
-			<img src="{{obj.avatar.url}}">
-		</div>
-		<div class="description">
-			<div class="ui header">Provide some more information about you :)</div>
-			<form action="" method="POST" class="ui form" enctype="multipart/form-data">
-				{% csrf_token %}
-				{{form.as_p}}
-		</div>
-	</div>
-	<div class="actions">
-		<button type="submit" class="ui positive right labeled icon button">
-			Update
-			<i class="checkmark icon"></i>
-		</button>
-		</form>
-	</div>
+    <i class="close icon"></i>
+    <div class="header">
+        Update your profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="{{obj.avatar.url}}">
+        </div>
+        <div class="description">
+            <div class="ui header">Provide some more information about you :)</div>
+            <form action="" class="ui form" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui positive right labeled icon button" type="submit">
+            Update
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
 </div>
 <!-- MODAL FORM FIM -->
+
+
+<!-- FRIEND LIST POPUP -->
+<div class="ui modal friendlist">
+    <div class="header">
+        {{obj.username}}'s friendlist
+    </div>
+    <div class="ui grid">
+        <div class="row">
+            <div class="ten wide column">
+                <table class="ui table">
+                    <tbody>
+                    {% for friend in obj.get_friends %}
+                    <tr><td>{{friend}}</td></tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui negative right labeled icon button mb-7" type="submit">
+            Close
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
+</div>
+
+<!-- FRIEND LIST POPUP FIM -->
 
 
 {% if confirm %}
@@ -41,35 +71,48 @@ my profile
 
 
 <div class="ui segment max-content-width right">
-	<h3>{{obj.username}}</h3>
-	<div class="ui grid">
-		<div class="row">
-			<div class="six wide column">
-				<img class="ui medium rounded image" src="{{obj.avatar.url}}">
-				<div class="row mt-10">
-					<button class="ui sencondary button" id="modal-btn">Update profile</button>
-				</div>
-			</div>
-			<div class="ten wide column">
-				<table class="ui table">
-					<tbody>
-					<tr>
-						<td>First Name</td>
-						<td>{{obj.first_name}}</td>
-					</tr>
-					<tr>
-						<td>Last Name</td>
-						<td>{{obj.last_name}}</td>
-					</tr>
-					<tr>
-						<td>Last Name</td>
-						<td>{{obj.last_name}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+    <h3>{{obj.username}}</h3>
+    <p>Last Updated: {{obj.updated_str}}</p>
+    <div class="ui grid">
+        <div class="row">
+            <div class="six wide column">
+                <img class="ui medium rounded image" src="{{obj.avatar.url}}">
+                <div class="row mt-10">
+                    <button class="ui sencondary button" id="modal-btn">Update profile</button>
+                </div>
+            </div>
+            <div class="ten wide column">
+                <table class="ui table">
+                    <tbody>
+                    <tr>
+                        <td>First Name</td>
+                        <td>{{obj.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td>{{obj.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bio</td>
+                        <td>{{obj.bio}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{obj.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>{{obj.country}}</td>
+                    </tr>
+                    <tr>
+                        <td id="friend_list_popup"><button class="positive ui button">Friends</button></td>
+                        <td>{{obj.get_friends_no}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </div>
 
