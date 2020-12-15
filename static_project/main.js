@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    $('#modal-btn').click(function(){
-        $('.ui.modal.mymodal').modal('show');
+    $('#update_account').click(function(){
+        $('.ui.modal.update').modal('show');
     })
 
     $('#friend_list_popup').click(function(){

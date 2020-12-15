@@ -49,6 +49,10 @@ class Profile(models.Model):
         new_updated = self.updated.strftime('%d-%m-%y')
         return new_updated
 
+    def created_str(self):
+        new_created = self.created.strftime('%y')
+        return new_created
+
     def __str__(self):
         return f"{self.username} ----- {self.created.strftime('%d-%m-%y')}"
 

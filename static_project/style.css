@@ -1,5 +1,5 @@
 body {
-    background: #F8F8F8 !important;
+    background: #F8F8F1 !important;
 }
 
 .nav {
@@ -27,13 +27,20 @@ body {
 }
 
 .max-content-width {
-    width: max-content;
+    width: 100%;
 }
 
-.right {
+.down {
+    margin-top: 5vh;
+}
+
+.small_text {
+    font-size: 1rem;
+    color: darkgrey;
+}
+
+#right {
     float: right;
 }
-
-
 
 
