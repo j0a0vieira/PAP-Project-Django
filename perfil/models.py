@@ -30,7 +30,7 @@ class Profile(models.Model):
     def fetch_all_authors_post(self):
         return self.posts.all()
 
-    def get_given_likes_no(self):
+    def get_given_likes_no(self): #likes dados
         likes = self.like_set.all()
         total_liked = 0
         for item in likes:
@@ -38,11 +38,11 @@ class Profile(models.Model):
                 total_liked += 1
         return total_liked
 
-    def get_likes_received_no(self):
+    def get_likes_received_no(self): #likes recebidos
         posts = self.posts.all()
         total_liked = 0
         for item in posts:
-            total_liked += item.likes.all().count()
+            total_liked += item.liked.all().count()
         return total_liked
 
     def updated_str(self):
