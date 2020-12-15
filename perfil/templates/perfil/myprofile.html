@@ -105,9 +105,22 @@ my profile
                         <td>{{obj.country}}</td>
                     </tr>
                     <tr>
+                        <td>Posts No.</td>
+                        <td>{{obj.get_posts_no}}</td>
+                    </tr>
+                    <tr>
+                        <td>Likes Given</td>
+                        <td>{{obj.get_given_likes_no}}</td>
+                    </tr>
+                    <tr>
+                        <td>Likes Received</td>
+                        <td>{{obj.get_likes_received_no}}</td>
+                    </tr>
+                    <tr>
                         <td id="friend_list_popup"><button class="positive ui button">Friends</button></td>
                         <td>{{obj.get_friends_no}}</td>
                     </tr>
+
                     </tbody>
                 </table>
             </div>
