@@ -8,92 +8,87 @@ my profile
 
 <!-- MODAL SETTINGS FORM INICIO -->
 <div class="ui modal update mymodal">
-	<i class="close icon"></i>
-	<div class="header">
-		Update your profile
-	</div>
-	<div class="image content">
-		<div class="ui medium image">
-			<img src="{{obj.avatar.url}}">
-		</div>
-		<div class="description">
-			<div class="ui header">Provide some more information about you :)</div>
-			<form action="" class="ui form" enctype="multipart/form-data" method="POST">
-				{% csrf_token %}
-				{{form.as_p}}
-		</div>
-	</div>
-	<div class="actions">
-		<button class="ui positive right labeled icon button" type="submit">
-			Update
-			<i class="checkmark icon"></i>
-		</button>
-		</form>
-	</div>
+    <i class="close icon"></i>
+    <div class="header">
+        Update your profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="{{obj.avatar.url}}">
+        </div>
+        <div class="description">
+            <div class="ui header">Provide some more information about you :)</div>
+            <form action="" class="ui form" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui positive right labeled icon button" type="submit">
+            Update
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
 </div>
 <!-- MODAL SETTINGS FORM FIM -->
 
 
 <!-- FRIEND LIST POPUP -->
 <div class="ui modal friendlist">
-	<div class="header">
-		{{obj.username}}'s friendlist
-	</div>
-	<div class="ui grid">
-		<div class="row">
-			<div class="ten wide column">
-				<table class="ui table">
-					<tbody>
-					{% for friend in obj.get_friends %}
-					<tr>
-						<td>{{friend}}</td>
-					</tr>
-					</tbody>
-					{% endfor %}
-				</table>
-			</div>
-		</div>
-	</div>
-	<div class="actions">
-		<button class="ui negative right labeled icon button mb-7" type="submit">
-			Close
-			<i class="checkmark icon"></i>
-		</button>
-		</form>
-	</div>
+    <div class="header">
+        {{obj.username}}'s friendlist
+    </div>
+    <div class="ui grid">
+        <div class="row">
+            <div class="ten wide column">
+                <table class="ui table">
+                    <tbody>
+                    {% for friend in obj.get_friends %}
+                    <tr>
+                        <td>{{friend}}</td>
+                    </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui negative right labeled icon button mb-7" type="submit">
+            Close
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
 </div>
 
 <!-- FRIEND LIST POPUP FIM -->
 
 
 {% if confirm == True %}
-	<div class="ui green message">Profile updated successfuly!</div>
+<div class="ui green message">Profile updated successfuly!</div>
 {% endif %}
 
 <div class="ui card">
-	<div class="image">
-		<span id="update_account">
-			<a class="ui left corner label">
-				<i class="cogs icon"></i>
-			</a>
-		</span>
-		<img src="{{obj.avatar.url}}">
-	</div>
-	<div class="content">
-		<p class="header">{{obj.first_name}} {{obj.last_name}} <span class="small_text">@{{obj.username}}</span></p>
-		<div class="meta">
-			<span class="date">Joined 20{{obj.created_str}}</span>
-		</div>
-		<div class="description">
-			{{obj.bio}}
-		</div>
-	</div>
-	<div class="extra content">
-		<a id="friend_list_popup"><i class="user icon"></i>{{obj.get_friends_no}} Friends</a>
-		<i class="file icon"></i>{{obj.get_posts_no}} Posts
-		<i class="thumbs up icon"></i>{{obj.get_given_likes_no}} Likes
-	
-	</div>
+    <div class="image">
+
+        <img src="{{obj.avatar.url}}">
+    </div>
+    <div class="content">
+        <p class="header">{{obj.first_name}} {{obj.last_name}} <span class="small_text">@{{obj.username}}</span><a class="update_account right"><i class="cogs icon"></i></a></p>
+        <div class="meta">
+            <span class="date">Joined 20{{obj.created_str}}</span>
+        </div>
+        <div class="description">
+            {{obj.bio}}
+        </div>
+    </div>
+    <div class="extra content center">
+        <a id="friend_list_popup"><i class="user icon"></i>{{obj.get_friends_no}} Friends</a>
+        <i class="file icon"></i>{{obj.get_posts_no}} Posts
+        <i class="thumbs up icon"></i>{{obj.get_given_likes_no}} Likes
+    </div>
 </div>
 
 

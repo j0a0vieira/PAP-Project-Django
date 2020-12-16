@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('#update_account').click(function(){
+    $('.update_account').click(function(){
         $('.ui.modal.update').modal('show');
     })
 
