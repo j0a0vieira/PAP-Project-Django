@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home_view
+from .views import startpage_view, login_view, login_attempt, home_view
 
 urlpatterns = [
+    path('home/', home_view, name="home"),
     path('profiles/', include('perfil.urls', namespace='perfil')),
-    path('', home_view, name='home'),
+    path('', startpage_view, name='startpage'),
+    path('login', login_view, name="login"),
+    path('login_attempt', login_attempt, name="login_attempt"),
     path('admin/', admin.site.urls),
 ]
 
