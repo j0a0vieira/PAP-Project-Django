@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth', #authentication
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -129,4 +129,8 @@ STATIC_ROOT = BASE_DIR / 'static_cdn/static_root'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'static_cdn/media_root'
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
+
 django_heroku.settings(locals())
