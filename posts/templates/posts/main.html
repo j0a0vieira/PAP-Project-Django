@@ -28,14 +28,23 @@ Posts
                 &nbsp;{{obj.num_likes}}
               </form>
             </div>
+            <form action="" method="POST" class="ui form"> <!-- COMMENTS -->
+              {% csrf_token %}
+              <input type="hidden" name="post_id" value={{obj.id}}>
+              {{c_form}}
+              <button type="submit" class="ui primary button" name="submit_c_form">Comment</button>
+            </form>
           </div>
         {% endfor %}
       </div>
       <div class="five wide column">
-        <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+        {% if post_add %}
+          <div class="ui green message">Post Added Successfuly!</div>
+        {% endif %}
+        <form action="" method="POST" class="ui form" enctype="multipart/form-data"> <!-- POSTS -->
           {% csrf_token %}
           {{p_form}}
-          <button type="submit" class="ui button positive">Post post</button>
+          <button type="submit" class="ui button positive" name="submit_p_form">Post post</button>
         </form>
 
       </div>

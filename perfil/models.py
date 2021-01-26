@@ -5,13 +5,13 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Profile(models.Model):
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
-    username = models.OneToOneField(User, on_delete=models.CASCADE) #se user for apagado, username também é
-    bio = models.TextField(default="write something beautiful about you :)", max_length=300)
-    email = models.EmailField(max_length=200)
-    country = models.CharField(max_length=25)
-    avatar = models.ImageField(default = "avatar.png", upload_to = '')
+    first_name = models.CharField(max_length=200, blank=True)
+    last_name = models.CharField(max_length=200, blank=True)
+    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(default="no bio...", max_length=300)
+    email = models.EmailField(max_length=200, blank=True)
+    country = models.CharField(max_length=200, blank=True)
+    avatar = models.ImageField(default='avatar.png', upload_to='avatars/')
     friends = models.ManyToManyField(User, blank=True, related_name='friends')
     slug = models.SlugField(unique=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
