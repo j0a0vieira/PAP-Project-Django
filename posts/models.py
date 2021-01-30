@@ -4,12 +4,12 @@ from perfil.models import Profile
 # Create your models here.
 
 class Post(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='POST')
     content = models.TextField()
     image = models.ImageField(upload_to='posts', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg'])], blank=True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
 
     def __str__(self):
         return str(self.content[:20])
@@ -18,7 +18,7 @@ class Post(models.Model):
         return self.liked.all().count()
 
     def num_comments(self):
-        return self.Comment_set.all().count()
+        return self.comment_set.all().count()
 
     class Meta:
         ordering = ('-created',)

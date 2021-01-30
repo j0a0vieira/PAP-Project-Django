@@ -51,4 +51,19 @@ left {
     float: left;
 }
 
+.mb-5 {
+  margin-bottom: 5px !important;
+}
 
+.bwhite-lg {
+  backgroiund-color: transparent !important;
+}
+
+.bwhite-sm {
+  backgroiund-color: transparent !important;
+  width: 10px !important;
+}
+
+.comment-box {
+  display: none;
+}

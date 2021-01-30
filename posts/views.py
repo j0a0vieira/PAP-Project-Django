@@ -3,6 +3,9 @@ from django.http import HttpResponseRedirect
 from .models import Post, Like, Comment
 from perfil.models import Profile
 from .forms import PostModelForm, CommentModelForm
+from django.views.generic import UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib import messages
 
 # Create your views here.
 def post_comment_create_and_list_view(request):
@@ -25,8 +28,10 @@ def post_comment_create_and_list_view(request):
             instance.save()
             p_form = PostModelForm()
             post_added = True
+            return redirect("posts:main-post-view")
 
     if 'submit_c_form' in request.POST:
+        print(request.POST)
         c_form = CommentModelForm(request.POST)
         if c_form.is_valid():
             instance = c_form.save(commit=False)
@@ -34,6 +39,7 @@ def post_comment_create_and_list_view(request):
             instance.post = Post.objects.get(id=request.POST.get('post_id'))
             instance.save()
             c_form = CommentModelForm()
+            return redirect("posts:main-post-view")
 
 
     context = {
@@ -72,3 +78,30 @@ def like_unlike_post(request):
             like.save()
 
         return redirect('posts:main-post-view')
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'posts/confirm_del.html'
+    success_url = reverse_lazy('posts:main-post-view')
+
+    def get_object(self, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        obj = Post.objects.get(pk=pk)
+        if not obj.author.username == self.request.user:
+            messages.warning(self.request, 'You need to be the author of the post in order to delete it!')
+        return obj
+
+class PostUpdateView(UpdateView):
+    form_class = PostModelForm
+    model = Post
+    template_name = 'posts/update.html'
+    success_url = reverse_lazy('posts:main-post-view')
+
+    def form_valid(self, form):
+        profile = Profile.objects.get(username = self.request.user)
+        if form.instance.author == profile:
+            return super().form_valid(form)
+        else:
+            form.add_error(None, 'You need to be the author of the post in order to update it!')
+            return super().form_invalid(form)
