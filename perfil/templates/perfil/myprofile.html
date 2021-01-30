@@ -14,7 +14,7 @@ my profile
     </div>
     <div class="image content">
         <div class="ui medium image">
-            <img src="{{obj.avatar.url}}">
+            <img src="{{profile.avatar.url}}">
         </div>
         <div class="description">
             <div class="ui header">Provide some more information about you :)</div>
@@ -37,14 +37,14 @@ my profile
 <!-- FRIEND LIST POPUP -->
 <div class="ui modal friendlist">
     <div class="header">
-        {{obj.username}}'s friendlist
+        {{profile.username}}'s friendlist
     </div>
     <div class="ui grid">
         <div class="row">
             <div class="ten wide column">
                 <table class="ui table">
                     <tbody>
-                    {% for friend in obj.get_friends %}
+                    {% for friend in profile.get_friends %}
                     <tr>
                         <td>{{friend}}</td>
                     </tr>
@@ -73,15 +73,15 @@ my profile
 <div class="ui card">
     <div class="image">
 
-        <img src="{{obj.avatar.url}}">
+        <img src="{{profile.avatar.url}}">
     </div>
     <div class="content">
-        <p class="header">{{obj.first_name}} {{obj.last_name}} <span class="small_text">@{{obj.username}}</span><a class="update_account right"><i class="cogs icon"></i></a></p>
+        <p class="header">{{profile.first_name}} {{profile.last_name}} <span class="small_text">@{{profile.username}}</span><a class="update_account right"><i class="cogs icon"></i></a></p>
         <div class="meta">
-            <span class="date">Joined 20{{obj.created_str}}</span>
+            <span class="date">Joined 20{{profile.created_str}}</span>
         </div>
         <div class="description">
-            {{obj.bio}}
+            {{profile.bio}}
         </div>
     </div>
 </div>
