@@ -77,17 +77,10 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': 'ec2-54-228-209-117.eu-west-1.compute.amazonaws.com',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        'DATABASE': 'd2uabg5l409pot',
-        'USER': 'hksvuecpptvahd',
-        'PORT': '5432',
-        'PASSWORD': '24a0f097b80cd7542e3744f15572ede87eb1e784e642740017369d1ca5b06b2d',
-        'URI': 'postgres://hksvuecpptvahd:24a0f097b80cd7542e3744f15572ede87eb1e784e642740017369d1ca5b06b2d@ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/d2uabg5l409pot',
-        'HEROKU CLI': 'heroku pg:psql postgresql-deep-66139 --app pap2021django'
     }
 }
-
 
 
 # Password validation
