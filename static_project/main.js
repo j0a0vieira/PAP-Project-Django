@@ -6,4 +6,8 @@ $(document).ready(function(){
     $('#friend_list_popup').click(function(){
         $('.ui.modal.friendlist').modal('show');
     })
+
+    $('.login_modal').click(function(){
+        $('.ui.modal.login').modal('show');
+    })
 })

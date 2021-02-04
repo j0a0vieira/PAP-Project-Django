@@ -3,15 +3,16 @@
 home
 {% endblock title %}
 
-{% block content %}
-<br>
-{{user}}
-{% endblock content %}
+{% if user.is_authenticated %}
+	{% block content %}
+		{{user.username}}	
+	{% endblock content %}
+{% else %}
+	{% block not_logged %}
+		{% include 'not_logged.html' %}
+	{% endblock not_logged %}
+{% endif %}
 
 {% block scripts %}
-<script>
-	$(document).ready(function () {
-		console.log('working ehweh')
-	})
-</script>
+
 {% endblock scripts %}

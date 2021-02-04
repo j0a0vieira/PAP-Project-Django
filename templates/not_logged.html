@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'not_logged.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- MAIN TEMPLATE -->
+    <div class="ui inverted vertical center aligned segment">
+        <nav class="ui container">
+            <h1 class="ui inverted header">Codelize</h1>
+        </nav>
+        <br>
+        <div class="ui content container">
+            <p>Codelize is a brand-new coding based social network.</p>
+            <p>From coders, to coders.</p>
+            <p>Beta. Give it a try.</p>
+            <div class="ui center aligned basic segment">
+                <span class="login_modal"><div class="ui grey labeled icon button">
+                    Log In
+                    <i class="sign in icon"></i>
+                </div></span>
+                <div class="ui horizontal divider"><span class="ui white">Or</span></div>
+                <div class="ui teal labeled icon button">
+                    Sign Up
+                    <i class="user icon"></i>
+                </div>
+            </div>
+        </div>
+        <footer class="ui inverted vertical segment">
+            Projeto de Aptidão Profissional 2020/2021 @JoãoVieira
+        </footer>
+    </div>
+
+
+    <!-- LOGIN MODAL FORM -->
+    <div class="ui modal login mymodal">
+        <div class="header">Log In</div>
+        <div class="image content">
+            <div class="ui medium image">
+                <img src="{% static 'user.png' %}">
+            </div>
+            <div class="description">
+                <div class="ui header">Make sure you keep your account safe!</div>
+                <form action="{% url 'login' %}" method="POST" name="login_form" class="ui form">
+                    {% csrf_token %}
+                    <div class="field">
+                        <input name="username" id="username" type="text" placeholder="Username">
+                    </div>
+                    <div class="field">
+                        <input name="password" id="password" type="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="ui positive basic button">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

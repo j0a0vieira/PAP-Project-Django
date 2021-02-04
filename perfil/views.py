@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile, Relationship
 from .forms import ProfileModelForm
 from django.views.generic import ListView
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # Create your views here.
@@ -70,4 +71,32 @@ class ProfileListView(ListView):
             context['is_empty'] = True
 
         return context
+
+
+#o sender envia um pedido de amizade para o receiver
+def send_invitation(request):
+    if request.method=='POST': #verificar se o request é POST, ou seja, submissão de um formulário, neste caso, envio de pedido de amizade
+        pk = request.POST.get('profile_pk') #pegar a pk da conta que receberá o convite, submetida no template
+        user = request.user #user logado
+        sender = Profile.objects.get(username=user) #definir quem envia o pedido, user logado
+        receiver = Profile.objects.get(pk=pk) #definir o utilizador que recebe o pedido, através da pk
+
+        rel = Relationship.objects.create(sender=sender, receiver=receiver, status='send') #criar relacao entre sender e receiver no estado 'send'
+
+        return redirect(request.META.get('HTTP_REFERER'))
     
+    return redirect('perfil:my-profile-view')
+
+
+def remove_friend(request):
+    if request.method=='POST': 
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = Profile.objects.get(username=user)
+        receiver = Profile.objects.get(pk=pk)
+
+        rel = Relationship.objects.get((Q(sender=sender) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=sender)))
+        
+        rel.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('perfil:my-profile-view')
