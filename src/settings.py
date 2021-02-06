@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'df8hsxybzcgr11_r5kz$co_&(g*+yit4al$40tp!xpi@2tlm5g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://codelize.herokuapp.com/', '127.0.0.1:8080']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'perfil',
-    'posts',
-] 
-
+    'posts'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +69,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'src.wsgi.application'
 
 
@@ -79,12 +77,8 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dc03p7k5v5qg40',
-        'HOST': 'ec2-34-254-69-72.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-        'USER': 'gawhhukivpsxlu',
-        'PASSWORD': '4060f647f0edd761bab81b3accafa156cc6ed746c6e51563cdf253eb83c7dd75'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

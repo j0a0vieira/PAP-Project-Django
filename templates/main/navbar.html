@@ -12,16 +12,16 @@
     <div class="right menu">
         {% if request.user.is_authenticated %}
         <div class="item">
-            <div class="ui floating dropdown icon button teal"> Friends
+            <div class="ui floating dropdown icon button teal"> Social
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="" class="item">
+                    <a href="{% url 'perfil:all-profiles-view' %}" class="item">
                         All Profiles
                     </a>
                     <a href="" class="item">
                         Send Invites
                     </a>
-                    <a href="" class="item">
+                    <a href="{% url 'perfil:my-invites-view' %}" class="item">
                         Received Invites
                     </a>
                 </div>
@@ -38,7 +38,6 @@
             </div>
 
             <a href="{% url 'perfil:my-profile-view' %}" class="item">
-                 <img class="ui avatar image" src="{{request.user.avatar}}">
                  {{ request.user }}
             </a>
 

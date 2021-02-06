@@ -81,7 +81,7 @@ class Profile(models.Model):
         return new_created
 
     def __str__(self):
-        return f"{self.username} ----- {self.created.strftime('%d-%m-%y')}"
+        return f"{self.username}"
 
     def save(self, *args, **kwargs):
         ex = False

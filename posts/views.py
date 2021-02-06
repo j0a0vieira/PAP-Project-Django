@@ -19,7 +19,7 @@ def post_comment_create_and_list_view(request):
 
     profile = Profile.objects.get(username=request.user)
 
-    if 'submit_p_form' in request.POST:
+    if 'submit_p_form' in request.POST: #NOVOS POSTS
         print(request.POST)
         p_form = PostModelForm(request.POST, request.FILES)
         if p_form.is_valid():
@@ -30,7 +30,7 @@ def post_comment_create_and_list_view(request):
             post_added = True
             return redirect("posts:main-post-view")
 
-    if 'submit_c_form' in request.POST:
+    if 'submit_c_form' in request.POST: #COMENTÁRIOS
         print(request.POST)
         c_form = CommentModelForm(request.POST)
         if c_form.is_valid():

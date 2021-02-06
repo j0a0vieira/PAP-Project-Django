@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="ui grid">
-    <div class="five wide column">
+    <div class="five wide column"> <!-- TRENDS -->
         <div class="ui segment">
             TRENDS
         </div>
     </div>
-    <div class="six wide column">
+    <div class="six wide column"> <!-- POST -->
         {% for obj in qs %}
         <div class="ui fluid card">
             <div class="content">
@@ -17,8 +17,8 @@
                     <div class="ui grid">
                         <div class="row">
                             {% ifequal request.user obj.author.username %}
-                                <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bwhite-lg ">Update</button></a>
-                                <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bwhite-lg ">Delete</button></a>
+                                <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bgwhite-lg ">Update</button></a>
+                                <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bgwhite-lg ">Delete</button></a>
                             {% endifequal %}
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 {% endif %}
                 </div>
 
-                <form action="" method="POST"class='ui fluid form'>
+                <form action="" method="POST"class='ui fluid form'> <!-- NOVO COMMENT -->
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value={{obj.id}}>
                     {{ c_form }}
@@ -82,7 +82,7 @@
 
         {% endfor %}
     </div>
-    <div class="five wide column">
+    <div class="five wide column"> <!-- NOVO POST -->
         <div class="ui segment">
             {% if post_added %}
                 <div class="ui green message">Post added</div>

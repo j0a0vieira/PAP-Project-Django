@@ -25,6 +25,7 @@ def my_profile_view(request):
 
     return render(request, 'perfil/myprofile.html', context)
 
+
 def invites_received_view(request):
     profile = Profile.objects.get(username=request.user)
     qs = Relationship.objects.invitations_received(profile)
