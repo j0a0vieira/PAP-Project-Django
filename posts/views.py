@@ -6,6 +6,7 @@ from .forms import PostModelForm, CommentModelForm
 from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.http import JsonResponse
 
 # Create your views here.
 def post_comment_create_and_list_view(request):
@@ -77,10 +78,16 @@ def like_unlike_post(request):
             post_obj.save()
             like.save()
 
-        return redirect('posts:main-post-view')
+        data = {
+            'value': like.value,
+            'likes': post_obj.liked.all().count()
+        }
+        return JsonResponse(data, safe=False)
+
+    return redirect('posts:main-post-view')
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(DeleteView): #apenas o dono do post consegue apagar o post
     model = Post
     template_name = 'posts/confirm_del.html'
     success_url = reverse_lazy('posts:main-post-view')
@@ -92,7 +99,7 @@ class PostDeleteView(DeleteView):
             messages.warning(self.request, 'You need to be the author of the post in order to delete it!')
         return obj
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(UpdateView): #apenas o dono do post consegue editar o post
     form_class = PostModelForm
     model = Post
     template_name = 'posts/update.html'

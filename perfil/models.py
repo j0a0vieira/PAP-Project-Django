@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .utils import get_random_code
 from django.template.defaultfilters import slugify
 from django.db.models import Q
+from django.shortcuts import reverse
 # Create your models here.
 
 class ProfileManager(models.Manager):
@@ -44,6 +45,12 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     objects = ProfileManager()
+    def __str__(self):
+        return f"{self.username}"
+
+    def get_absolute_url(self):
+        return reverse("perfil:profile_detail_view", kwargs={"slug": self.slug})
+    
 
     def get_friends(self):
         return self.friends.all()
@@ -54,7 +61,7 @@ class Profile(models.Model):
     def get_posts_no(self):
         return self.posts.all().count() #'posts' is related name to comments authors in /posts/models.py
 
-    def fetch_all_authors_post(self):
+    def get_all_authors_posts(self):
         return self.posts.all()
 
     def get_given_likes_no(self): #likes dados
@@ -80,19 +87,28 @@ class Profile(models.Model):
         new_created = self.created.strftime('%y')
         return new_created
 
-    def __str__(self):
-        return f"{self.username}"
+
+
+    __initial_first_name = None
+    __initial_last_name = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__initial_first_name = self.first_name
+        self.__initial_last_name = self.last_name
 
     def save(self, *args, **kwargs):
         ex = False
-        if self.first_name and self.last_name:
-            to_slug = slugify(str(self.first_name) + " " + str(self.last_name))
-            ex = Profile.objects.filter(slug=to_slug).exists()
-            while ex:
-                to_slug = slugify(to_slug + " " + str(get_random_code()))
+        to_slug = self.slug
+        if self.first_name != self.__initial_first_name or self.last_name != self.__initial_last_name or self.slug == "":
+            if self.first_name and self.last_name:
+                to_slug = slugify(str(self.first_name) + " " + str(self.last_name))
                 ex = Profile.objects.filter(slug=to_slug).exists()
-        else:
-            to_slug = str(self.username)
+                while ex:
+                    to_slug = slugify(to_slug + " " + str(get_random_code()))
+                    ex = Profile.objects.filter(slug=to_slug).exists()
+            else:
+                to_slug = str(self.username)
         self.slug = to_slug
         super().save(*args, **kwargs)
 

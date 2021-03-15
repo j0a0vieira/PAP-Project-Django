@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile, Relationship
 from .forms import ProfileModelForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from django.db.models import Q
 
@@ -29,10 +29,40 @@ def my_profile_view(request):
 def invites_received_view(request):
     profile = Profile.objects.get(username=request.user)
     qs = Relationship.objects.invitations_received(profile)
+    result = list(map(lambda x: x.sender, qs))
+    is_empty = False
+    if len(result) == 0:
+        is_empty = True
 
-    context = {'qs': qs}
+    context = {
+        'qs': result,
+        'is_empty': is_empty,
+        }
 
     return render(request, 'perfil/my_invites.html', context)
+
+
+def accept_invitation(request):
+    if request.method == "POST":
+        pk = request.POST.get('profile_pk')
+        sender = Profile.objects.get(pk=pk)
+        receiver = Profile.objects.get(username=request.user)
+        rel = get_object_or_404(Relationship, sender=sender, receiver=receiver)
+        if rel.status == "send":
+            rel.status = 'accepted'
+            rel.save()
+    return redirect('perfil:my-invites-view')
+
+
+def reject_invitation(request):
+    if request.method == "POST":
+        pk = request.POST.get('profile_pk')
+        sender = Profile.objects.get(pk=pk)
+        receiver = Profile.objects.get(username=request.user)
+        rel = get_object_or_404(Relationship, sender=sender, receiver=receiver)
+        rel.delete()
+    return redirect('perfil:my-invites-view')
+
 
 
 
@@ -43,6 +73,38 @@ def invite_profiles_list_view(request):
     context = {'qs': qs}
 
     return render(request, 'perfil/to_invite_list.html', context)
+
+
+class ProfileDetailView(DetailView):
+    model = Profile
+    template_name = 'perfil/detail.html'
+
+    def get_object(self, slug=None):
+        slug = self.kwargs.get('slug')
+        profile = Profile.objects.get(slug=slug)
+        return profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(username__iexact=self.request.user)
+        profile = Profile.objects.get(username=user)
+        rel_r = Relationship.objects.filter(sender=profile)
+        rel_s = Relationship.objects.filter(receiver=profile)
+        rel_receiver = []
+        rel_sender = []
+        for item in rel_r:
+            rel_receiver.append(item.receiver.username)
+        for item in rel_s:
+            rel_sender.append(item.sender.username)
+        context["rel_receiver"] = rel_receiver
+        context["rel_sender"] = rel_sender
+        context['is_empty'] = False
+        context['posts'] = self.get_object().get_all_authors_posts()
+        context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
+
+        return context
+
+
 
 
 class ProfileListView(ListView):

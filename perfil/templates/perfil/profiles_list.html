@@ -22,7 +22,7 @@ All Profiles
                     <div class="thirteen wide column"> <!-- botões -->
                         <h3>{{obj.username}}</h3>
                         <p>{{obj.bio}}</p> <p>friends:{{obj.get_friends_no}}</p>
-                        <button class="ui primary button">See Profile</button>
+                        <a href={{ obj.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
                         
                         <br>
 
