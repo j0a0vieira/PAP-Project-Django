@@ -11,6 +11,10 @@ $(document).ready(function() {
         $('.ui.modal.login').modal('show');
     })
 
+    $('.signup_modal').click(function() {
+        $('.ui.modal.signup').modal('show');
+    })
+
     $('.ui.dropdown')
         .dropdown();
 })

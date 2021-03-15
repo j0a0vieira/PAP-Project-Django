@@ -1,13 +1,8 @@
 <div class="ui inverted menu nav mb-7">
   <div class="ui container">
-    <a href="{% url 'home' %}" class="item">
+    <a href="{% url 'posts:main-post-view' %}" class="item">
         <h3>Codelize</h3>
     </a>
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'posts:main-post-view' %}" class="item">
-        Timeline
-    </a>
-    {% endif %}
 
     <div class="right menu">
         {% if request.user.is_authenticated %}
@@ -18,11 +13,11 @@
                     <a href="{% url 'perfil:all-profiles-view' %}" class="item">
                         All Profiles
                     </a>
-                    <a href="" class="item">
+                    <a href="{% url 'perfil:invite-profiles-view' %}" class="item">
                         Send Invites
                     </a>
                     <a href="{% url 'perfil:my-invites-view' %}" class="item">
-                        Received Invites
+                        Received Invites &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
                     </a>
                 </div>
              </div>
@@ -38,6 +33,7 @@
             </div>
 
             <a href="{% url 'perfil:my-profile-view' %}" class="item">
+                <img src={{picture.url}} class='ui avatar image'>&nbsp;
                  {{ request.user }}
             </a>
 

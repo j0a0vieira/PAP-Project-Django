@@ -32,12 +32,13 @@
                 {% endif %}
             </div>
             <div class="content">
-                <p> {{ obj.content }} </p> <!-- CONTEUDO DO POST -->
-                <div class="right floated"> <!-- DAR LIKE/DISLIKE -->
-                    <form action="{% url 'posts:like-post-view' %}" method="POST" class="like-form" id="{{obj.id}}">
+                <p> {{ obj.content }} </p>
+                <div class="right floated">
+                    <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{obj.id}}'>
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value={{obj.id}}>
-                            <button type="submit" class="ui button like-btn {{obj.id}}">
+                        
+                            <button type="submit" class="ui button like-btn{{obj.id}}">
                                 {% if profile not in obj.liked.all %}
                                     Like
                                 {% else %}
@@ -45,10 +46,13 @@
                                 {% endif %}
                             </button>
                             <div class="ui grid">
-                            <div class="column"><div class="like-count {{obj.id}}"> {{obj.num_likes}} </div></div>
-                            <div class="column">likes</div>
+                                <div class="column">
+                                    <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
+                                </div>
+                                <div class="column">
+                                    likes
+                                </div>
                             </div>
-                            
                     </form>
                 </div>
                 <i class="comment icon"></i>

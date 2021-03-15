@@ -4,9 +4,12 @@ from .forms import ProfileModelForm
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
+@login_required
 def my_profile_view(request):
     profile = Profile.objects.get(username=request.user)
     form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
@@ -26,6 +29,7 @@ def my_profile_view(request):
     return render(request, 'perfil/myprofile.html', context)
 
 
+@login_required
 def invites_received_view(request):
     profile = Profile.objects.get(username=request.user)
     qs = Relationship.objects.invitations_received(profile)
@@ -42,6 +46,7 @@ def invites_received_view(request):
     return render(request, 'perfil/my_invites.html', context)
 
 
+@login_required
 def accept_invitation(request):
     if request.method == "POST":
         pk = request.POST.get('profile_pk')
@@ -54,6 +59,7 @@ def accept_invitation(request):
     return redirect('perfil:my-invites-view')
 
 
+@login_required
 def reject_invitation(request):
     if request.method == "POST":
         pk = request.POST.get('profile_pk')
@@ -65,7 +71,7 @@ def reject_invitation(request):
 
 
 
-
+@login_required
 def invite_profiles_list_view(request):
     user = request.user
     qs = Profile.objects.get_all_profiles_to_invite(user)
@@ -75,7 +81,7 @@ def invite_profiles_list_view(request):
     return render(request, 'perfil/to_invite_list.html', context)
 
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'perfil/detail.html'
 
@@ -107,7 +113,7 @@ class ProfileDetailView(DetailView):
 
 
 
-class ProfileListView(ListView):
+class ProfileListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = 'perfil/profiles_list.html'
 
@@ -137,6 +143,7 @@ class ProfileListView(ListView):
 
 
 #o sender envia um pedido de amizade para o receiver
+@login_required
 def send_invitation(request):
     if request.method=='POST': #verificar se o request é POST, ou seja, submissão de um formulário, neste caso, envio de pedido de amizade
         pk = request.POST.get('profile_pk') #pegar a pk da conta que receberá o convite, submetida no template
@@ -151,6 +158,7 @@ def send_invitation(request):
     return redirect('perfil:my-profile-view')
 
 
+@login_required
 def remove_friend(request):
     if request.method=='POST': 
         pk = request.POST.get('profile_pk')
@@ -163,3 +171,5 @@ def remove_friend(request):
         rel.delete()
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('perfil:my-profile-view')
+
+

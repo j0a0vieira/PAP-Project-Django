@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'posts'
 ]
 
+LOGIN_URL = 'home'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'perfil.context_processors.profile_pic',
+                'perfil.context_processors.invitations_received_no',
             ],
         },
     },
@@ -130,7 +134,7 @@ STATIC_ROOT = BASE_DIR / 'static_cdn/static_root'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'static_cdn/media_root'
 
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "/timeline/"
 LOGOUT_REDIRECT_URL = "home"
 
 django_heroku.settings(locals())
