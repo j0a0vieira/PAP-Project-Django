@@ -67,3 +67,8 @@ body {
 .comment-box {
     display: none;
 }
+
+.fullpc {
+    width: 100% !important;
+    height: 100% !important;
+}
