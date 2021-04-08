@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
-
-{% block title %}main page{% endblock title %}
+{% load static %}
+{% block title %}Timeline{% endblock title %}
 
 {% block content %}
 <div class="ui grid">
-    <div class="five wide column"> <!-- TRENDS -->
-        <div class="ui segment">
-            TRENDS
-        </div>
-    </div>
-    <div class="six wide column"> <!-- POST -->
+
+    <div class="eleven wide column computer only"> <!-- POST -->
         {% for obj in qs %}
         <div class="ui fluid card">
             <div class="content">
@@ -85,11 +81,9 @@
                 </form>
             </div>
         </div>
-
-
         {% endfor %}
     </div>
-    <div class="five wide column"> <!-- NOVO POST -->
+    <div class="five wide column">
         <div class="ui segment">
             {% if post_added %}
                 <div class="ui green message">Post added</div>
@@ -97,11 +91,30 @@
             <form action="" method="POST" class='ui form' enctype="multipart/form-data">
                 {% csrf_token %}
                 {{p_form}}
-                <button type='submit' name="submit_p_form" class="ui positive button w-full mt-5">Send</button>
+                <button type='submit' name="submit_p_form" class="ui positive button w-full mt-10">Send</button>
             </form>
         </div>
     </div>
 </div>
+
+
+<!-- FORMULARIO NOVO POST -->
+<div class="ui modal newpost mymodal">
+    <div class="header"  style="text-align: center;">Share something</div>
+    <div class="image content">
+        <div class="description">
+            <form action="" method="POST" class="ui form">
+                {% csrf_token %}
+                {{p_form}}
+                <button type='submit' name="submit_p_form" class="ui positive button w-full mt-10">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- //FORMULARIO NOVO POST -->
+
+
+
 {% endblock content %}
 
 {% block scripts %} 
