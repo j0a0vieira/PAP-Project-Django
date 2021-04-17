@@ -22,12 +22,14 @@
                 <span class="login_modal"><div class="ui grey labeled icon button">
                         Log In
                         <i class="sign in icon"></i>
-                    </div></span>
+                    </div>
+                </span>
                 <div class="ui horizontal divider"><span class="ui white">Or</span></div>
-                <div class="ui teal labeled icon button">
+                <span class="signup_modal"><div class="ui teal labeled icon button">
                     Sign Up
                     <i class="user icon"></i>
                 </div>
+            </span>
             </div>
         </div>
         <footer class="ui inverted vertical segment">
@@ -51,6 +53,30 @@
                         <input name="password" id="password" type="password" placeholder="Password">
                     </div>
                     <button type="submit" class="ui positive basic button">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP MODAL FORM -->
+    <div class="ui modal signup mymodal">
+        <div class="header">Sign Up</div>
+        <div class="image content">
+            <div class="description">
+                <div class="ui header">Dont share this details!</div>
+                <form action="" method="POST" class="ui form">
+                    {% csrf_token %}
+                    <div class="field">
+                        {{uc_form.username}}
+                    </div>
+                    <div class="field">
+                        {{uc_form.password1}}
+                    </div>
+                    <div class="field">
+                        {{uc_form.password2}}
+                    </div>
+
+                    <button type="submit" name="user_registration" class="ui positive basic button">Sign Up</button>
                 </form>
             </div>
         </div>
