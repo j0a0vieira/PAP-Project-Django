@@ -25,7 +25,7 @@ SECRET_KEY = 'df8hsxybzcgr11_r5kz$co_&(g*+yit4al$40tp!xpi@2tlm5g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['codelize-pap.herokuapp.com']
 
 # Application definition
 
@@ -86,6 +86,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
