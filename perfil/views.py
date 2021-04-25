@@ -109,7 +109,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
 
         return context
-
+          
 
 
 
