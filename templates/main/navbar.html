@@ -1,50 +1,48 @@
 <div class="ui inverted menu nav mb-7 fixed top sticky" style="background-color: #6C63FF !important;">
-  <div class="ui container">
-    <a href="{% url 'posts:main-post-view' %}" class="item">
-        <h3>Codelize</h3>
-    </a>
+    <div class="ui container">
+        <a href="{% url 'posts:main-post-view' %}" class="item">
+            <h3>Codelize</h3>
+        </a>
 
-    <div class="right menu">
-        {% if request.user.is_authenticated %}
-        <div class="item">
-            <div class="ui floating dropdown icon button teal"> Social
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a href="{% url 'perfil:all-profiles-view' %}" class="item">
-                        All Profiles
-                    </a>
-                    <a href="{% url 'perfil:invite-profiles-view' %}" class="item">
-                        Send Invites
-                    </a>
-                    <a href="{% url 'perfil:my-invites-view' %}" class="item">
-                        Received Invites &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
-                    </a>
+        <div class="right menu">
+            {% if request.user.is_authenticated %}
+            <div class="item">
+                <div class="ui floating dropdown icon button teal"> Social
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="{% url 'perfil:all-profiles-view' %}" class="item">
+                            Profiles
+                        </a>
+                        <a href="{% url 'perfil:invite-profiles-view' %}" class="item">
+                            Send Invites
+                        </a>
+                        <a href="{% url 'perfil:my-invites-view' %}" class="item">
+                            Received Invites &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
+                        </a>
+                    </div>
                 </div>
-             </div>
-        </div>
-             <div class="item">
-              <form action="" method="GET">
-                <div class="ui action left icon input">
-                <input class="prompt" type="text" name='q' placeholder="name of a friend...">
-                <i class="search icon"></i>
-                <button type='submit' class="ui button">Search</button>
-                </div>
-            </form>
+            </div>
+            <div class="item">
+                <form action="{% url 'perfil:profile-search' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="ui action left icon input">
+                        <input class="prompt" type="text" name='searched_name' placeholder="Find someone">
+                        <i class="search icon"></i>
+                        <button type='submit' class="ui button">Search</button>
+                    </div>
+                </form>
             </div>
 
             <a href="{% url 'perfil:my-profile-view' %}" class="item">
-                <img src={{picture.url}} class='ui avatar image'>&nbsp;
-                 {{ request.user }}
+                <img src={{picture.url}} class='ui avatar image'>&nbsp; {{ request.user }}
             </a>
 
             <a href="{% url 'logout' %}" class="ui item">
-                Logout
-            </a>
-        {% else %}
-        <a href="{% url 'login' %}" class="ui item">
+                    Logout
+                </a> {% else %}
+            <a href="{% url 'login' %}" class="ui item">
                 Login
-            </a>
-        {% endif %}
+            </a> {% endif %}
+        </div>
     </div>
-  </div>
 </div>

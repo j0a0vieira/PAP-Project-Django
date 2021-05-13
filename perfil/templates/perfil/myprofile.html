@@ -1,10 +1,4 @@
-{% extends 'base.html' %}
-
-{% block title %}
-my profile
-{% endblock title %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %} my profile {% endblock title %} {% block content %}
 
 <!-- MODAL SETTINGS FORM INICIO -->
 <div class="ui modal update mymodal">
@@ -19,17 +13,16 @@ my profile
         <div class="description">
             <div class="ui header">Provide some more information about you :)</div>
             <form action="" class="ui form" enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
+                {% csrf_token %} {{form.as_p}}
         </div>
     </div>
-            <div class="actions">
-                <button class="ui positive right labeled icon button" type="submit">
+    <div class="actions">
+        <button class="ui positive right labeled icon button" type="submit">
                     Update
                     <i class="checkmark icon"></i>
                 </button>
-            </form>
-            </div>
+        </form>
+    </div>
 </div>
 <!-- MODAL SETTINGS FORM FIM -->
 
@@ -44,10 +37,10 @@ my profile
             <div class="ten wide column">
                 <table class="ui table">
                     <tbody>
-                    {% for friend in profile.get_friends %}
-                    <tr>
-                        <td>{{friend}}</td>
-                    </tr>
+                        {% for friend in profile.get_friends %}
+                        <tr>
+                            <td>{{friend}}</td>
+                        </tr>
                     </tbody>
                     {% endfor %}
                 </table>

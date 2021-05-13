@@ -1,13 +1,42 @@
-{% extends 'base.html' %}
-
-{% block title %}
-Invite Friends
-{% endblock title %}
-
-{% block content %}
-    <ul>
+{% extends 'base.html' %} {% block title %} Invite Friends {% endblock title %} {% block content %}
+<ul>
     {% for invite in qs %}
-        <li>{{invite}}</li>
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="row">
+                <div class="three wide column">
+                    <!-- avatar -->
+                    <img class="ui small circular image fullpc" src={{invite.avatar.url}}>
+                </div>
+                <div class="thirteen wide column">
+                    <!-- botões -->
+                    <h3>{{invite.username}}</h3>
+                    <p>{{invite.bio}}</p>
+                    <p>friends:{{invite.get_friends_no}}</p>
+                    <a href={{ invite.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
+
+                    <br> {% if invite.username not in rel_receiver and request.user not in rel_sender %}
+                    <form action="{% url 'perfil:send_invite' %}" method="POST">
+                        <!-- Enviar pedido -->
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{invite.pk}}">
+                        <button type="submit" class="mt-10 ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
+                    </form>
+                    {% endif %} {% if invite.username in rel_receiver and request.user not in invite.friends.all %}
+                    <!-- Pedido enviado por nós ainda em espera -->
+                    <button class="mt-10 ui disabled button"><i class="user icon"></i>Waiting for approval</button> {% endif %} {% if request.user in invite.friends.all %}
+                    <form action="{% url 'perfil:remove_friend' %}" method="POST">
+                        <!-- Remover amizade -->
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{invite.pk}}">
+                        <button class="mt-10 ui negative basic button"><i class="minus square icon"></i>Remove friendship</button>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-    </ul>
+</ul>
 {% endblock content %}

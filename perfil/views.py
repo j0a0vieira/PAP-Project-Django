@@ -29,6 +29,30 @@ def my_profile_view(request):
     return render(request, 'perfil/myprofile.html', context)
 
 
+
+@login_required
+def profile_search(request):
+
+    if request.method == 'POST':
+        searched = request.POST['searched_name']
+        people_match = Profile.objects.filter( #usar Q para criar uma queryset complexa
+            Q(first_name=searched) | Q(last_name=searched)
+        ).exclude(username=request.user)
+        print(people_match)
+
+        context = {
+            'searched': searched,
+            'matched_people': people_match,
+        }
+
+
+
+        return render(request, 'perfil/profile_search.html', context)
+    else:
+        return render(request, 'perfil/profile_search.html')
+
+
+
 @login_required
 def invites_received_view(request):
     profile = Profile.objects.get(username=request.user)

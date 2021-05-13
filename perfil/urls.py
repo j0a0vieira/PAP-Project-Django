@@ -9,12 +9,14 @@ from .views import (
         remove_friend,
         accept_invitation,
         reject_invitation,
+        profile_search,
 )
 
 app_name = 'perfil'
 
 urlpatterns = [
     path('myprofile/', my_profile_view, name="my-profile-view"),
+    path('profile_search/', profile_search, name="profile-search"),
     path('my_invites/', invites_received_view, name="my-invites-view"),
     path('', ProfileListView.as_view(), name="all-profiles-view"),
     path('to_invite/', invite_profiles_list_view, name="invite-profiles-view"),

@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block title %} Profiles Search {% endblock title %} {% block content %} 
+
+{% if searched %}
+    <h1>Results for '{{searched}}'</h1>
+    {% for person in matched_people %}
+
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="row">
+                <div class="three wide column">
+                    <!-- avatar -->
+                    <img class="ui small circular image fullpc" src={{person.avatar.url}}>
+                </div>
+                <div class="thirteen wide column">
+                    <!-- botões -->
+                    <h3>{{person.username}}</h3>
+                    <p>{{person.bio}}</p>
+                    <p>friends:{{person.get_friends_no}}</p>
+                    <a href={{ person.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %} 
+
+{% else %}
+    <h1>You forgot to enter some name or no one was found.</h1>
+{% endif %}
+
+<!-- request.user = utilizador logado -->
+<!-- obj.user = todos os utilizadores excepto o utilizador logado -->
+
+{% endblock content %}

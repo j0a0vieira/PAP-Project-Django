@@ -25,16 +25,16 @@
                     <!-- Enviar pedido -->
                     {% csrf_token %}
                     <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                    <button type="submit" class="ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
+                    <button type="submit" class="mt-10 ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
                 </form>
                 {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
                 <!-- Pedido enviado por nós ainda em espera -->
-                <button class="ui disabled button"><i class="user icon"></i>Waiting for approval</button> {% endif %} {% if request.user in obj.friends.all %}
+                <button class="mt-10 ui disabled button"><i class="user icon"></i>Waiting for approval</button> {% endif %} {% if request.user in obj.friends.all %}
                 <form action="{% url 'perfil:remove_friend' %}" method="POST">
                     <!-- Remover amizade -->
                     {% csrf_token %}
                     <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                    <button class="ui negative basic button"><i class="minus square icon"></i>Remove friendship</button>
+                    <button class="mt-10 ui negative basic button"><i class="minus square icon"></i>Remove friendship</button>
                 </form>
                 {% endif %}
 
