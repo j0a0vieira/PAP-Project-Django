@@ -10,7 +10,7 @@
                     <div class="ui grid">
                         <div class="row">
                             {% ifequal request.user obj.author.username %}
-                            <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bgwhite-lg "><i class="undo icon"></i>Updater</button></a>
+                            <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bgwhite-lg "><i class="undo icon"></i>Update</button></a>
                             <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bgwhite-lg "><i class="trash icon"></i>Delete</button></a> {% endifequal %}
                         </div>
                     </div>
