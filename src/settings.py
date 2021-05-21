@@ -40,26 +40,8 @@ INSTALLED_APPS = [
     'perfil',
     'posts',
     'django_filters',
-    'admin_watchdog',
 ]
 
-LOGGING = { #logger de erros no admin panel - admin_watchdog
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'admin_watchdog': {
-            'level': 'ERROR',
-            'class': 'admin_watchdog.handlers.AdminWatchdogHandler',
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['admin_watchdog'],
-            'level': 'ERROR',
-            'propagate': False,
-        }
-    }
-}
 
 #LOGIN_URL = 'home'
 

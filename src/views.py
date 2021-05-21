@@ -9,6 +9,7 @@ from .forms import SignUpForm
 def home_view(request):
     user = request.user
     uc_form = SignUpForm()
+    registration_error = False
 
     if 'user_registration' in request.POST: #NOVOS POSTS
         uc_form = SignUpForm(request.POST)
@@ -19,9 +20,12 @@ def home_view(request):
                                     )
             login(request, new_user)
             return redirect("/timeline/")
+        else: 
+            registration_error = True   
 
 
     context = {
+        'r_error': registration_error,
         'uc_form': uc_form,
         'user': user,
     }

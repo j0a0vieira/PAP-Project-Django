@@ -33,7 +33,7 @@
             </div>
         </div>
         <footer class="ui inverted vertical segment">
-            Projeto de Aptidão Profissional 2020/2021 @JoãoVieira
+            Projeto de Aptidão Profissional 2020/2021 @Codelize
         </footer>
     </div>
 
@@ -82,6 +82,31 @@
         </div>
     </div>
 
+    <!-- Error Modal -->
+    <div class="ui modal error mymodal">
+        <div class="header">OOPS</div>
+        <div class="image content">
+            <div class="description">
+                <div class="ui header center">Make sure you spelled everything right</div>
+                <div class="ui bulleted list center" style="color: red;">
+                    <div class="item">>150 chars, letters, digits and @/./+/-/_ only.</div>
+                    <div class="item">Your password must be at least 8 chars.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+
+<script>
+    $(document).ready(function() {
+        var r_error = "{{r_error}}"
+        console.log(r_error)
+
+        if (r_error == "True") {
+            $('.ui.modal.error').modal('show');
+        }
+    });
+</script>
 
 </html>
