@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def my_profile_view(request):
     profile = Profile.objects.get(username=request.user)
     form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
+    friends_qs = Profile.get_friends(request.user)
     confirm = False
 
     if request.method == 'POST':
@@ -21,6 +22,7 @@ def my_profile_view(request):
             confirm = True
 
     context = {
+        'friendlist': friends_qs,
         'profile': profile,
         'form': form,
         'confirm': confirm,

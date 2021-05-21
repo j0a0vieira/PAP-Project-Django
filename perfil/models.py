@@ -27,7 +27,7 @@ class ProfileManager(models.Manager):
 
     def get_all_profiles(self, me):
         profiles = Profile.objects.all().exclude(username=me)
-        return profiles 
+        return profiles
 
 
 

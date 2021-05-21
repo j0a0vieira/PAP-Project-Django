@@ -63,21 +63,84 @@
 <div class="ui green message">Profile updated successfuly!</div>
 {% endif %}
 
-<div class="ui card">
-    <div class="image">
+<div class="ui grid">
+    <div class="five wide column">
+        <div class="ui card">
+            <div class="image">
 
-        <img src="{{profile.avatar.url}}">
-    </div>
-    <div class="content">
-        <p class="header">{{profile.first_name}} {{profile.last_name}} <span class="small_text">@{{profile.username}}</span><a class="update_account right"><i class="cogs icon"></i></a></p>
-        <div class="meta">
-            <span class="date">Joined 20{{profile.created_str}}</span>
+                <img src="{{profile.avatar.url}}">
+            </div>
+            <div class="content">
+                <p class="header">{{profile.first_name}} {{profile.last_name}} <span class="small_text">@{{profile.username}}</span><a class="update_account right"><i class="cogs icon"></i></a></p>
+                <div class="meta">
+                    <span class="date">Joined 20{{profile.created_str}}</span>
+                </div>
+                <div class="description">
+                    {{profile.bio}}
+                </div>
+            </div>
         </div>
-        <div class="description">
-            {{profile.bio}}
+    </div>
+    <div class="eleven wide column">
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Posts</a>
+            <a class="item" data-tab="second">Friends</a>
+            <a class="item" data-tab="third">Something Else</a>
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            POSTS
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            {% for friend in friendlist %}
+                    <div class="ui segment">
+                        <div class="ui grid">
+                            <div class="row">
+                                <div class="three wide column">
+                                    <!-- avatar -->
+                                    <img class="ui small circular image fullpc" src={{friend.avatar.url}}>
+                                </div>
+                                <div class="thirteen wide column">
+                                    <!-- botões -->
+                                    <h3>{{friend.username}}</h3>
+                                    <p>{{friend.bio}}</p>
+                                    <p>friends:{{friend.get_friends_no}}</p>
+                                    <a href={{ friend.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
+
+                                    <br> {% if friend.username not in rel_receiver and request.user not in rel_sender %}
+                                    <form action="{% url 'perfil:send_friend' %}" method="POST">
+                                        <!-- Enviar pedido -->
+                                        {% csrf_token %}
+                                        <input type="hidden" name="profile_pk" value="{{friend.pk}}">
+                                        <button type="submit" class="mt-10 ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
+                                    </form>
+                                    {% endif %} {% if friend.username in rel_receiver and request.user not in friend.friends.all %}
+                                    <!-- Pedido enviado por nós ainda em espera -->
+                                    <button class="mt-10 ui disabled button"><i class="user icon"></i>Waiting for approval</button> {% endif %} {% if request.user in friend.friends.all %}
+                                    <form action="{% url 'perfil:remove_friend' %}" method="POST">
+                                        <!-- Remover amizade -->
+                                        {% csrf_token %}
+                                        <input type="hidden" name="profile_pk" value="{{friend.pk}}">
+                                        <button class="mt-10 ui negative basic button"><i class="minus square icon"></i>Remove friendship</button>
+                                    </form>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">
+            Third
         </div>
     </div>
 </div>
+
+<script>
+    $('.menu .item')
+    .tab()
+    ;
+</script>
 
 
 {% endblock content %}>
