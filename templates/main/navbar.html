@@ -1,7 +1,7 @@
 <div class="ui inverted menu nav mb-7 fixed top sticky" style="background-color: #6C63FF !important;">
     <div class="ui container">
         <a href="{% url 'posts:main-post-view' %}" class="item">
-            <h3>Codelize</h3>
+            <h3>Timelines</h3>
         </a>
 
         <div class="right menu">
@@ -37,31 +37,23 @@
                 <img src={{picture.url}} class='ui avatar image'>{{ request.user }}<i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href={% url 'perfil:my-profile-view' %}>
-                        <i class="user circle outline icon"></i>
-                        My profile
-                    </a> 
-                    <a class="item">
-                        <i class="users icon"></i>
-                        Friend List
+                        <i class="user circle outline icon"></i> My profile
                     </a>
                     <a class="item">
-                        <i class="moon icon"></i>
-                        Dark Mode
+                        <i class="users icon"></i> Friend List
+                    </a>
+                    <a class="item">
+                        <i class="moon icon"></i> Dark Mode
                     </a>
                     <a id="logout-btn" class="item" href="{% url 'logout' %}">
-                        <i class="power off icon"></i>
-                        Log Out
+                        <i class="power off icon"></i> Log Out
                     </a>
                 </div>
             </div>
         </div>
-            {% endif %}
+        {% endif %}
     </div>
 </div>
 
 <script>
-
-
-
-
 </script>

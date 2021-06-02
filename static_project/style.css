@@ -87,3 +87,19 @@ body {
     position: fixed !important;
     height: 85vh !important;
 }
+
+.fixed {
+    position: fixed !important;
+}
+
+.profile-pic {
+    min-height: 150px;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.profile-pic-personal-page {
+    max-height: 200px;
+    min-height: 200px;
+    object-fit: cover;
+}

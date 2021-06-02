@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from posts.models import Post
+from posts.forms import PostModelForm, CommentModelForm
 
 
 # Create your views here.
@@ -15,17 +17,43 @@ def my_profile_view(request):
     form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
     friends_qs = Profile.get_friends(request.user)
     confirm = False
+    no_posts = False
+    no_friends = False
 
-    if request.method == 'POST':
+    posts_qs = Post.objects.filter(author = profile)
+    if bool(posts_qs) == False:
+        no_posts = True
+
+    c_form = CommentModelForm()
+
+    if bool(friends_qs) == False:
+        no_friends = True
+
+    if 'update_profile' in request.POST:
         if form.is_valid():
             form.save()
             confirm = True
+    
+    if 'submit_c_form' in request.POST: #COMENTÁRIOS
+        print(request.POST)
+        c_form = CommentModelForm(request.POST)
+        if c_form.is_valid():
+            instance = c_form.save(commit=False)
+            instance.user = profile
+            instance.post = Post.objects.get(id=request.POST.get('post_id'))
+            instance.save()
+            c_form = CommentModelForm()
+            return redirect("perfil:my-profile-view")
 
     context = {
+        'no_friends': no_friends,
+        'no_posts': no_posts,
+        'user_posts': posts_qs,
         'friendlist': friends_qs,
         'profile': profile,
         'form': form,
         'confirm': confirm,
+        'c_form': c_form,
     }
 
     return render(request, 'perfil/myprofile.html', context)
@@ -40,7 +68,6 @@ def profile_search(request):
         people_match = Profile.objects.filter( #usar Q para criar uma queryset complexa
             Q(first_name=searched) | Q(last_name=searched)
         ).exclude(username=request.user)
-        print(people_match)
 
         context = {
             'searched': searched,
@@ -120,6 +147,8 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = User.objects.get(username__iexact=self.request.user)
         profile = Profile.objects.get(username=user)
+        detailuser_posts_qs = Post.objects.filter(author = profile)
+        c_form = CommentModelForm()
         rel_r = Relationship.objects.filter(sender=profile)
         rel_s = Relationship.objects.filter(receiver=profile)
         rel_receiver = []
@@ -128,6 +157,19 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             rel_receiver.append(item.receiver.username)
         for item in rel_s:
             rel_sender.append(item.sender.username)
+        if 'submit_c_form' in self.request.POST: #COMENTÁRIOS
+            c_form = CommentModelForm(self.request.POST)
+            if c_form.is_valid():
+                print('funcionou')
+                instance = c_form.save(commit=False)
+                instance.user = profile
+                instance.post = Post.objects.get(id=self.request.POST.get('post_id'))
+                instance.save()
+                c_form = CommentModelForm()
+                return redirect("perfil:my-profile-view")
+                
+        context['c_form'] = c_form
+        context['posts'] = detailuser_posts_qs
         context["rel_receiver"] = rel_receiver
         context["rel_sender"] = rel_sender
         context['is_empty'] = False
@@ -159,6 +201,15 @@ class ProfileListView(LoginRequiredMixin, ListView):
             rel_receiver.append(item.receiver.username)
         for item in rel_s:
             rel_sender.append(item.sender.username)
+        if 'submit_c_form' in self.request.POST: #COMENTÁRIOS
+            c_form = CommentModelForm(self.request.POST)
+            if c_form.is_valid():
+                instance = c_form.save(commit=False)
+                instance.user = profile
+                instance.post = Post.objects.get(id=self.request.POST.get('post_id'))
+                instance.save()
+                c_form = CommentModelForm()
+                return redirect("/timeline/")
         context["rel_receiver"] = rel_receiver
         context["rel_sender"] = rel_sender
         context['is_empty'] = False
