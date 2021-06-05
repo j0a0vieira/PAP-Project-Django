@@ -21,10 +21,10 @@
                 <a href={{ obj.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
 
                 <br> {% if obj.username not in rel_receiver and request.user not in rel_sender %}
-                <form action="{% url 'perfil:send_invite' %}" method="POST">
+                <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
                     <!-- Enviar pedido -->
                     {% csrf_token %}
-                    <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                    <input id="profile-key" type="hidden" name="profile_pk" value="{{obj.pk}}">
                     <button type="submit" class="mt-10 ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
                 </form>
                 {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
@@ -42,4 +42,8 @@
         </div>
     </div>
 </div>
-{% endfor %} {% endblock content %}
+{% endfor %} {% endblock content %} {% block scripts %}
+<script>
+</script>
+
+{% endblock scripts %}

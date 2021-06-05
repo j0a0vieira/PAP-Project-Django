@@ -72,11 +72,13 @@
                         </div> {% endfor %} {% endif %}
                     </div>
 
-                    <form action="" method="POST" class='ui fluid form'>
+                    <form action="" method="POST" class="ui action input form">
                         <!-- NOVO COMMENT -->
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value={{post.id}}> {{ c_form }}
-                        <button type="submit" name="submit_c_form" class="ui primary button mt-10 w-full"><i class="paper plane outline icon"></i>Send</button>
+                        <button type="submit" name="submit_c_form" class="ui icon button">
+                          <i class="comment icon"></i>
+                        </button>
                     </form>
                 </div>
             </div>
