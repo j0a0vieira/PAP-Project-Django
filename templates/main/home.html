@@ -1,18 +1,23 @@
-{% extends 'base.html' %}
-{% block title %}
-home
-{% endblock title %}
+{% extends 'base.html' %} {% load static %} {% block title %} home {% endblock title %} {% block stylesheet %} {% endblock stylesheet %} {% block inicio %}
 
-{% if user.is_authenticated %}
-	{% block content %}
-		{{user.username}}	
-	{% endblock content %}
-{% else %}
-	{% block not_logged %}
-		{% include 'not_logged.html' %}
-	{% endblock not_logged %}
-{% endif %}
+<section class="pt--100" style="background: linear-gradient(#2b1055, #7597de);">
 
-{% block scripts %}
+    <img src="{% static 'img/landscape.jpg' %}" alt="" id="stars">
+    <img src="{% static 'img/sunbeam.jpg' %}" alt="" id="stars">
+</section>
 
+{% endblock inicio %} {% block scripts %}
+<script>
+    let moon = document.getElementById("moon");
+    let text = document.getElementById("text");
+    let stars = document.getElementById("stars");
+    let mback = document.getElementById("mback");
+    let mfront = document.getElementById("mfront");
+
+    window.addEventListener("scroll", function() {
+        let value = window.scrollY;
+        stars.style.left = value * 0.3 + 'px';
+
+    })
+</script>
 {% endblock scripts %}

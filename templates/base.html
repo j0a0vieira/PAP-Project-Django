@@ -17,15 +17,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
     <title>Timelines - {% block title %}{% endblock title %}</title>
+
+
 </head>
 
 <body>
-
-    {% if user.is_authenticated %} {% include 'main/navbar.html' %}
-    <div class="ui container pt-100">
+    {% include 'main/navbar.html' %}
+    <div class="ui container">
         {% block content %} {% endblock content %}
     </div>
-    {% else %} {% block not_logged %} {% endblock not_logged %} {% endif %} {% block scripts %} {% endblock scripts %}
+    {% block inicio %} {% endblock inicio %} {% block scripts %} {% endblock scripts %}
+
+    <!--Custom js ADD-->
+    <script type="text/javascript" src={% static 'main.js' %}></script>
 
 </body>
 

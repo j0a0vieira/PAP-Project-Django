@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block title %} My Invites {% endblock title %} {% block content %} {% if is_empty %}
 <h4>You have no invitations</h4>
 {% endif %}
-<ul>
+<ul class="pt-100">
     {% for obj in qs %}
-    <div class="ui segment">
+    <div class="ui segment ">
         <div class="ui grid">
             <div class="row">
                 <div class="three wide column">

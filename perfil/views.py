@@ -35,7 +35,6 @@ def my_profile_view(request):
             confirm = True
     
     if 'submit_c_form' in request.POST: #COMENTÁRIOS
-        print(request.POST)
         c_form = CommentModelForm(request.POST)
         if c_form.is_valid():
             instance = c_form.save(commit=False)
@@ -157,16 +156,6 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             rel_receiver.append(item.receiver.username)
         for item in rel_s:
             rel_sender.append(item.sender.username)
-        if 'submit_c_form' in self.request.POST: #COMENTÁRIOS
-            c_form = CommentModelForm(self.request.POST)
-            if c_form.is_valid():
-                print('funcionou')
-                instance = c_form.save(commit=False)
-                instance.user = profile
-                instance.post = Post.objects.get(id=self.request.POST.get('post_id'))
-                instance.save()
-                c_form = CommentModelForm()
-                return redirect("perfil:my-profile-view")
                 
         context['c_form'] = c_form
         context['posts'] = detailuser_posts_qs
@@ -177,6 +166,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
 
         return context
+
           
 
 

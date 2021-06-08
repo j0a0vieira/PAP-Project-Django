@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 # Create your views here.
 @login_required
@@ -24,7 +25,6 @@ def post_comment_create_and_list_view(request):
     profile = Profile.objects.get(username=request.user)
 
     if 'submit_p_form' in request.POST: #NOVOS POSTS
-        print(request.POST)
         p_form = PostModelForm(request.POST, request.FILES)
         if p_form.is_valid():
             instance = p_form.save(commit=False)
@@ -35,7 +35,6 @@ def post_comment_create_and_list_view(request):
             return redirect("posts:main-post-view")
 
     if 'submit_c_form' in request.POST: #COMENTÁRIOS
-        print(request.POST)
         c_form = CommentModelForm(request.POST)
         if c_form.is_valid():
             instance = c_form.save(commit=False)
@@ -55,6 +54,25 @@ def post_comment_create_and_list_view(request):
     }
 
     return render(request, 'posts/main.html', context)
+
+@login_required
+def detailed_user_comment(request):
+    profile = Profile.objects.get(username=request.user)
+    c_form = CommentModelForm()
+
+    if 'submit_c_form' in request.POST: #COMENTÁRIOS
+        c_form = CommentModelForm(request.POST)
+        if c_form.is_valid():
+            instance = c_form.save(commit=False)
+            instance.user = profile
+            instance.post = Post.objects.get(id=request.POST.get('post_id'))
+            slug = instance.post.author.username
+            instance.save()
+            c_form = CommentModelForm()
+            return HttpResponseRedirect(
+            reverse('perfil:profile_detail_view', args=(slug,))
+        )
+    
 
 
 @login_required

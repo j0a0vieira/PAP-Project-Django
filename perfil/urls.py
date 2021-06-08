@@ -9,7 +9,8 @@ from .views import (
         remove_friend,
         accept_invitation,
         reject_invitation,
-        profile_search,
+        profile_search
+        
 )
 
 app_name = 'perfil'

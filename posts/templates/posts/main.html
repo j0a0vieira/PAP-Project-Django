@@ -1,16 +1,13 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Timeline{% endblock title %} {% block content %}
-<div class="ui grid">
+<div class="ui grid pt-100">
 
-    <div class="eleven wide centered column">
+    <div class="eleven wide tablet only centered column      eleven wide computer only centered column         fifteen wide mobile only centered column">
         <div class="ui segment">
             {% if post_added %}
             <div class="ui green message">Post added</div>
             {% endif %}
             <div class="ui grid">
-                <div class="two wide centered column">
-                    <img class="ui avatar image mini-avatar-image" src="{{picture.url}}" alt="">
-                </div>
-                <div class="fourteen wide column">
+                <div class="sixteen wide column">
                     <form action="" method="POST" class='ui form' enctype="multipart/form-data">
                         {% csrf_token %} {{p_form}}
                         <button type='submit' name="submit_p_form" class="ui positive button w-full mt-10"><i class="paper plane outline icon"></i>Send</button>
@@ -22,71 +19,84 @@
         </div>
         <!-- POST -->
         {% for obj in qs %}
-        <div class="ui fluid card">
+
+        <div class="ui fluid card ">
             <div class="content">
-                <div class="right floated meta">
-                    <div class="ui grid">
-                        <div class="row">
-                            {% ifequal request.user obj.author.username %}
-                            <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bgwhite-lg "><i class="undo icon"></i>Update</button></a>
-                            <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bgwhite-lg "><i class="trash icon"></i>Delete</button></a> {% endifequal %}
-                        </div>
-                    </div>
-                </div>
-                <img class="ui avatar image" src={{obj.author.avatar.url}}> {{ obj.author }} - {{ obj.created|timesince}} ago
+                <div class="right floated meta">{{ obj.created|timesince}} ago</div>
+                {% ifequal request.user obj.author.username %}
+                <a style="text-decoration:none; color: black;" href="{% url 'perfil:my-profile-view' %}">
+                    <img class="ui avatar image" src="{{obj.author.avatar.url}}"> {{obj.author.username}}</a>
+                {% else %}
+                <a style="text-decoration:none; color: black;" href={{ obj.author.get_absolute_url }}>
+                    <img class="ui avatar image" src="{{obj.author.avatar.url}}"> {{obj.author.username}}</a>
+                {% endifequal %}
+
             </div>
-            <div class="ui fluid image">
+            <div class="ui image">
                 {% if obj.image %}
                 <img src={{obj.image.url}}> {% endif %}
             </div>
             <div class="content">
-                <p> {{ obj.content }} </p>
-                <div class="right floated">
-                    <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{obj.id}}'>
-                        {% csrf_token %}
-                        <input type="hidden" name="post_id" value={{obj.id}}>
+                <h4>{{obj.content}}</h4>
 
-                        <button type="submit" class="ui button like-btn{{obj.id}}">
-                                {% if profile not in obj.liked.all %}
-                                    Like
-                                {% else %}
-                                    Unlike
-                                {% endif %}
-                            </button>
-                        <div class="ui grid">
-                            <div class="column">
-                                <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
+            </div>
+            <div class="content">
+                <span class="right floated">
+                        <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{obj.id}}'>
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value={{obj.id}}>
+                            <div class="ui labeled button" tabindex="0">
+                                <button id="btnlike" class="ui button doslikes like-btn{{obj.id}}">
+                                    
+                                    {% if profile not in obj.liked.all %} Like {% else %} Unlike {% endif %}
+                                </button>
+                                <a class="ui basic label">
+                                    <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
+                                </a>
                             </div>
-                            <div class="column">
-                                likes
+                        </form>
+                </span>
+                <div class="ui left labeled button cmt_btn" tabindex="0">
+                    <a class="ui basic label">
+                  {{obj.num_comments}}
+                    </a>
+                    <div class="ui icon button">
+                        <i class="comment icon"></i>
+                    </div>
+                </div>
+            </div>
+            {% if obj.num_comments != 0 %}
+            <div class="content cmt-box" style="display: none;">
+                <div class="comment-box"> {% if obj.comment_set.all %} {% for c in obj.comment_set.all %}
+                    <div class="ui comments">
+                        <div class="comment">
+                            <a class="ui avatar image">
+                                <img src="{{c.user.avatar.url}}">
+                            </a>
+                            <div class="content">
+                                <a class="author">{{ c.user }}</a>
+                                <div class="metadata">
+                                    <div class="date">{{ c.created|timesince}} ago</div>
+                                </div>
+                                <div class="text">
+                                    {{c.body}}
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>{% endfor %} {% endif %}
                 </div>
-                <i class="comment icon"></i>
-                <span> {{ obj.num_comments }} comments</span>
             </div>
+            {% endif %}
+
             <div class="extra content">
-                <div class="mb-5">
-
-                </div>
-
-                <button class="cmt_btn ui button mb-5">show / hide comments</button>
-
-                <div class="comment-box">- {% if obj.comment_set.all %} {% for c in obj.comment_set.all %}
-
-                    <div class="ui segment mb-5">
-                        <img class="ui avatar image" src={{c.user.avatar.url}}>
-                        <span>{{ c.user }}</span>
-                        <div class='mt-5'>{{ c.body }}</div>
-                    </div> {% endfor %} {% endif %}
-                </div>
                 <form action="" method="POST" class="ui action input form">
                     <!-- NOVO COMMENT -->
                     {% csrf_token %}
-                    <input type="hidden" name="post_id" value={{obj.id}}> {{ c_form }}
-                    <button type="submit" name="submit_c_form" class="ui icon button">
-                      <i class="comment icon"></i>
+                    <input type="hidden" name="post_id" value={{obj.id}}>
+                    <div class="ui large transparent left icon input">
+                        <i class="comment outline icon"></i> {{c_form}}
+                    </div>
+                    <button type="submit" name="submit_c_form" class="ui icon button">Comment
                     </button>
                 </form>
 
@@ -105,10 +115,12 @@
         let display = false
         $(".cmt_btn").click(function() {
             if (display === false) {
-                $(this).next(".comment-box").show("slow");
+                $(".cmt-box").show();
+                $(".comment-box").show("slow");
                 display = true
             } else {
-                $(this).next(".comment-box").hide("slow");
+                $(".comment-box").hide("slow");
+                $(".cmt-box").hide("slow");
                 display = false
             }
         });
@@ -126,6 +138,7 @@
             let res;
             const likes = $(`.like-count${post_id}`).text()
             const trimCount = parseInt(likes)
+
 
             $.ajax({
                 type: 'POST',

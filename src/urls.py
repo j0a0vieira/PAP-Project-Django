@@ -17,14 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home_view
+from .views import home_view, login
 
 urlpatterns = [
     path('profiles/', include('perfil.urls', namespace='perfil')),
     path('timeline/', include('posts.urls', namespace='posts')),
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls'), name="login"),
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
