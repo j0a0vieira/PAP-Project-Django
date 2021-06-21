@@ -22,7 +22,12 @@
 
         <div class="ui fluid card ">
             <div class="content">
-                <div class="right floated meta">{{ obj.created|timesince}} ago</div>
+                <div class="right floated meta">{{ obj.created|timesince}} ago&nbsp;&nbsp;&nbsp;
+                    {% ifequal request.user obj.author.username %}
+                        <a href="{% url 'posts:post-update' obj.pk %}"><button class="ui button bgwhite-lg "><i class="undo icon"></i>Update</button></a>
+                        <a href="{% url 'posts:post-delete' obj.pk %}"><button class="ui button bgwhite-lg "><i class="trash icon"></i>Delete</button></a>
+                    {% endifequal %}
+                </div>
                 {% ifequal request.user obj.author.username %}
                 <a style="text-decoration:none; color: black;" href="{% url 'perfil:my-profile-view' %}">
                     <img class="ui avatar image" src="{{obj.author.avatar.url}}"> {{obj.author.username}}</a>

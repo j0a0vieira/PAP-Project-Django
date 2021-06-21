@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 body {
     background: #F8F8F1 !important;
 }
@@ -140,13 +142,12 @@ body {
 /* PARALLAX INICIO */
 
 section {
+    font-family: "Poppins", sans-serif !important;
     position: relative;
     width: 100%;
     height: 100vh;
     padding: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: url;
 }
 
 section img {
@@ -173,4 +174,73 @@ section #text {
 
 section img#mfront {
     z-index: 10;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    width: 25%;
+    height: 50vh;
+    border-radius: 15px;
+    font-family: "Poppins", sans-serif !important;
+    color: #4F518C;
+}
+
+.info-signup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    width: 25%;
+    height: 65vh;
+    border-radius: 15px;
+    font-family: "Poppins", sans-serif;
+    color: #4F518C;
+}
+
+.info-signup h2 {
+    position: relative;
+    font-weight: 100;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 15% !important;
+    font-family: "Poppins", sans-serif !important;
+
+}
+
+.info h2 {
+    position: relative;
+    font-weight: 100;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 15% !important;
+    font-family: "Poppins", sans-serif !important;
+
+}
+
+.buttons {
+    margin-top: 20%;
+    text-align: center;
+    
+}
+
+.form-login {
+    margin-top: 15%;
+
+    font-family: "Poppins", sans-serif !important;
+}
+
+.aviso {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 15px;
+    font-family: "Poppins", sans-serif !important;
 }

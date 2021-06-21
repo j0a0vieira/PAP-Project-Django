@@ -1,23 +1,25 @@
 {% extends 'base.html' %} {% load static %} {% block title %} home {% endblock title %} {% block stylesheet %} {% endblock stylesheet %} {% block inicio %}
 
-<section class="pt--100" style="background: linear-gradient(#2b1055, #7597de);">
+<section style="background-image: url({% static 'img/landscape.jpg' %})">
+    <div class="info">
+        <h2>Invade some Timelines</h2>
+        <div class="buttons">
+            <a href="{% url 'account_login' %}"><button class="ui labeled icon button teal">
+                <i class="sign in alternate icon"></i>
+                Log In
+            </button></a>
+            <div class="ui horizontal divider">
+                Or
+            </div>
+            <a href="{% url 'account_signup' %}"><button class="ui labeled icon button grey">
+                <i class="user plus icon"></i>
+                Sign Up
+            </button></a>
+        </div>
+    </div>
+    
 
-    <img src="{% static 'img/landscape.jpg' %}" alt="" id="stars">
-    <img src="{% static 'img/sunbeam.jpg' %}" alt="" id="stars">
+
 </section>
 
-{% endblock inicio %} {% block scripts %}
-<script>
-    let moon = document.getElementById("moon");
-    let text = document.getElementById("text");
-    let stars = document.getElementById("stars");
-    let mback = document.getElementById("mback");
-    let mfront = document.getElementById("mfront");
-
-    window.addEventListener("scroll", function() {
-        let value = window.scrollY;
-        stars.style.left = value * 0.3 + 'px';
-
-    })
-</script>
-{% endblock scripts %}
+{% endblock inicio %} {% block scripts %} {% endblock scripts %}
