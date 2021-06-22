@@ -184,7 +184,7 @@ section img#mfront {
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.9);
     width: 25%;
-    height: 400px;
+    height: 50vh;
     border-radius: 15px;
     font-family: "Poppins", sans-serif !important;
     color: #4F518C;
@@ -198,7 +198,7 @@ section img#mfront {
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.9);
     width: 25%;
-    height: 70vh;
+    height: 65vh;
     border-radius: 15px;
     font-family: "Poppins", sans-serif;
     color: #4F518C;
@@ -213,32 +213,6 @@ section img#mfront {
     font-family: "Poppins", sans-serif !important;
 
 }
-
-.info-login {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.9);
-    width: 25%;
-    min-width: 5%;
-    height: 450px;
-    border-radius: 15px;
-    font-family: "Poppins", sans-serif !important;
-    color: #4F518C;
-}
-
-.info-login h2 {
-    position: relative;
-    font-weight: 100;
-    font-size: 35px;
-    text-align: center;
-    margin-top: 15% !important;
-    font-family: "Poppins", sans-serif !important;
-
-}
-
 
 .info h2 {
     position: relative;
@@ -269,18 +243,4 @@ section img#mfront {
     width: 100%;
     padding-bottom: 15px;
     font-family: "Poppins", sans-serif !important;
-}
-
-@media(max-width: 768px) {
-    .info, .info-signup {
-        min-width: 70% !important;
-    }
-
-    .info-signup {
-        min-height: 550px !important;
-    }
-
-    .info-login {
-        min-width: 70% !important;
-    }
 }

@@ -25,7 +25,7 @@ SECRET_KEY = 'df8hsxybzcgr11_r5kz$co_&(g*+yit4al$40tp!xpi@2tlm5g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    'storages'
 ]
 
 SITE_ID = 1
@@ -147,7 +149,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static_project'
@@ -155,7 +159,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / 'static_cdn/static_root'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'static_cdn/media_root'
