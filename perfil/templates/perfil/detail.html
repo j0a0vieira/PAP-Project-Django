@@ -2,26 +2,57 @@
 {% extends 'base.html' %} {% block title %} my profile {% endblock title %} {% block content %}
 <div class="ui grid pt-100">
     <div class="five wide column">
-        <div class="ui card">
-            <div class="image">
-                <img src="{{object.avatar.url}}" class="profile-pic-personal-page">
-            </div>
-            <div class="content">
-                <p class="header">{{object.first_name}} {{object.last_name}} <span class="small_text">@{{object.username}}</span></p>
-                <div class="meta">
-                    <span class="date">Joined 20{{object.created_str}}</span>
+        <div class="ui cards">
+            <div class="card">
+                <div class="image">
+                    <img class="profile-list-avatar" src="{{object.avatar.url}}">
                 </div>
-                <div class="description">
-                    {{object.bio}}
+                <div class="content">
+                    <div class="header"><a href="{{ object.get_absolute_url}}">{{object.first_name}} {{object.last_name}} <span class="small_text">@{{object.username}}</span></a>
+                        <div class="right floated meta">
+                            {% if object.username not in rel_receiver and request.user not in rel_sender %}
+                            <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
+                                <!-- Enviar pedido -->
+                                {% csrf_token %}
+                                <input id="profile-key" type="hidden" name="profile_pk" value="{{object.pk}}">
+                                <button type="submit" class="ui positive basic button"><i class="user plus icon "></i></button>
+                            </form>
+                            {% endif %} {% if object.username in rel_receiver and request.user not in object.friends.all %}
+                            <!-- Pedido enviado por nós ainda em espera -->
+                            <button type="submit" class="ui disabled basic button"><i class="user plus icon "></i></button> {% endif %} {% if request.user in object.friends.all %}
+                            <form action="{% url 'perfil:remove_friend' %}" method="POST">
+                                <!-- Remover amizade -->
+                                {% csrf_token %}
+                                <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                                <button type="submit" class="ui basic negative button"><i class="user times icon "></i></button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="description">
+                        {{object.bio}}
+                    </div>
+                </div>
+                <div class="extra content">
+                    <span class="right floated">
+                  Joined 20{{object.created_str}}
+                </span>
+                    <span>
+                  <i class="user icon"></i>
+                  {{object.get_friends_no}} Friends |
+                  <i class="sticky note icon"></i>
+                  {{object.get_posts_no}} Posts
+                </span>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="eleven wide column">
         <div class="ui top attached tabular menu">
             <a class="item active" data-tab="first">Posts</a>
             <a class="item" data-tab="second">Friends</a>
-            <a class="item" data-tab="third">Something Else</a>
         </div>
         <div class="ui bottom attached tab segment active" data-tab="first">
             {% if posts %} {% for post in posts %}
@@ -47,20 +78,20 @@
                 </div>
                 <div class="content">
                     <span class="right floated">
-                            <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{post.id}}'>
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" value={{post.id}}>
-                                <div class="ui labeled button" tabindex="0">
-                                    <button id="btnlike" class="ui button doslikes like-btn{{post.id}}">
-                                        
-                                        {% if profile not in post.liked.all %} Like {% else %} Unlike {% endif %}
-                                    </button>
-                                    <a class="ui basic label">
-                                        <div class="like-count{{post.id}}"> {{post.num_likes}} </div>
-                                    </a>
-                                </div>
-                            </form>
-                    </span>
+                        <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{post.id}}'>
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value={{post.id}}>
+                            <div class="ui labeled button" tabindex="0">
+                                <button id="btnlike" class="ui button doslikes like-btn{{post.id}}">
+                                    
+                                    {% if profile not in post.liked.all %} Like {% else %} Unlike {% endif %}
+                                </button>
+                                <a class="ui basic label">
+                                    <div class="like-count{{post.id}}"> {{post.num_likes}} </div>
+                                </a>
+                            </div>
+                        </form>
+                </span>
                     <div class="ui left labeled button cmt_btn" tabindex="0">
                         <a class="ui basic label">
                       {{post.num_comments}}
@@ -135,9 +166,7 @@
             <h3>{{object.username}} has no friends</h3>
             {% endif %}
         </div>
-        <div class="ui bottom attached tab segment" data-tab="third">
-            Third
-        </div>
+
     </div>
 </div>
 
@@ -172,6 +201,7 @@
             let res;
             const likes = $(`.like-count${post_id}`).text()
             const trimCount = parseInt(likes)
+
 
             $.ajax({
                 type: 'POST',

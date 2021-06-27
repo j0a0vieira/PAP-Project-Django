@@ -31,11 +31,12 @@ class ProfileManager(models.Manager):
 
 
 
+
 class Profile(models.Model):
     first_name = models.CharField(max_length=200, blank=True)
     last_name = models.CharField(max_length=200, blank=True)
     username = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(default="no bio...", max_length=300)
+    bio = models.TextField(default="no bio...", max_length=120)
     email = models.EmailField(max_length=200, blank=True)
     country = models.CharField(max_length=200, blank=True)
     avatar = models.ImageField(default='avatar.png', upload_to='avatars/')

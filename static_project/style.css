@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
-
 body {
     background: #F8F8F1 !important;
 }
@@ -198,7 +197,7 @@ section img#mfront {
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.9);
     width: 25%;
-    height: 70vh;
+    height: 570px;
     border-radius: 15px;
     font-family: "Poppins", sans-serif;
     color: #4F518C;
@@ -211,7 +210,6 @@ section img#mfront {
     text-align: center;
     margin-top: 15% !important;
     font-family: "Poppins", sans-serif !important;
-
 }
 
 .info-login {
@@ -236,9 +234,7 @@ section img#mfront {
     text-align: center;
     margin-top: 15% !important;
     font-family: "Poppins", sans-serif !important;
-
 }
-
 
 .info h2 {
     position: relative;
@@ -247,18 +243,15 @@ section img#mfront {
     text-align: center;
     margin-top: 15% !important;
     font-family: "Poppins", sans-serif !important;
-
 }
 
 .buttons {
     margin-top: 20%;
     text-align: center;
-    
 }
 
 .form-login {
     margin-top: 15%;
-
     font-family: "Poppins", sans-serif !important;
 }
 
@@ -272,15 +265,21 @@ section img#mfront {
 }
 
 @media(max-width: 768px) {
-    .info, .info-signup {
+    .info,
+    .info-signup {
         min-width: 70% !important;
     }
-
     .info-signup {
         min-height: 550px !important;
     }
-
     .info-login {
         min-width: 70% !important;
     }
+}
+
+.profile-list-avatar {
+    object-fit: cover !important;
+    max-height: 200px !important;
+    min-height: 200px !important;
+    min-width: 100% !important;
 }

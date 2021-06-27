@@ -20,9 +20,6 @@
                         <a href="{% url 'perfil:all-profiles-view' %}" class="item">
                                 Profiles
                             </a>
-                        <a href="{% url 'perfil:invite-profiles-view' %}" class="item">
-                                Reach New People
-                            </a>
                         <a href="{% url 'perfil:my-invites-view' %}" class="item">
                                 Received Invites &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
                             </a>
@@ -57,8 +54,7 @@
             </a>
             <a href="{% url 'account_signup' %}" class="ui item">
                 Sign Up
-            </a>
-            {% endif %}
+            </a> {% endif %}
         </div>
     </div>
 </div>

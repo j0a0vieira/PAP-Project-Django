@@ -4,45 +4,56 @@
 
 <!-- request.user = utilizador logado -->
 <!-- obj.user = todos os utilizadores excepto o utilizador logado -->
-<div class="mt-100">
-    {% for obj in object_list %}
-    <div class="ui segment">
-        <div class="ui grid">
-            <div class="row">
-                <div class="three wide column">
-                    <!-- avatar -->
-                    <img class="ui small circular image fullpc profile-pic" src={{obj.avatar.url}}>
+<div class="ui grid mt-100">
+    <div class="ui centered cards">
+        {% for obj in object_list %}
+
+        <div class="card">
+            <div class="image">
+                <img class="profile-list-avatar" src="{{obj.avatar.url}}">
+            </div>
+            <div class="content">
+                <div class="header"><a href="{{ obj.get_absolute_url}}">{{obj.first_name}} {{obj.last_name}} <span class="small_text">@{{obj.username}}</span></a>
+                    <div class="right floated meta">
+                        {% if obj.username not in rel_receiver and request.user not in rel_sender %}
+                        <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
+                            <!-- Enviar pedido -->
+                            {% csrf_token %}
+                            <input id="profile-key" type="hidden" name="profile_pk" value="{{obj.pk}}">
+                            <button type="submit" class="ui positive basic button"><i class="user plus icon "></i></button>
+                        </form>
+                        {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
+                        <!-- Pedido enviado por nós ainda em espera -->
+                        <button type="submit" class="ui disabled basic button"><i class="user plus icon "></i></button> {% endif %} {% if request.user in obj.friends.all %}
+                        <form action="{% url 'perfil:remove_friend' %}" method="POST">
+                            <!-- Remover amizade -->
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                            <button type="submit" class="ui basic negative button"><i class="user times icon "></i></button>
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="thirteen wide column">
-                    <!-- botões -->
-                    <h3>{{obj.username}}</h3>
-                    <p>{{obj.bio}}</p>
-                    <p>friends:{{obj.get_friends_no}}</p>
-                    <a href={{ obj.get_absolute_url }}><button class="ui primary button">See Profile</button></a>
 
-                    <br> {% if obj.username not in rel_receiver and request.user not in rel_sender %}
-                    <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
-                        <!-- Enviar pedido -->
-                        {% csrf_token %}
-                        <input id="profile-key" type="hidden" name="profile_pk" value="{{obj.pk}}">
-                        <button type="submit" class="mt-10 ui positive basic button"><i class="plus square icon"></i>Add to friends</button>
-                    </form>
-                    {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
-                    <!-- Pedido enviado por nós ainda em espera -->
-                    <button class="mt-10 ui disabled button"><i class="user icon"></i>Waiting for approval</button> {% endif %} {% if request.user in obj.friends.all %}
-                    <form action="{% url 'perfil:remove_friend' %}" method="POST">
-                        <!-- Remover amizade -->
-                        {% csrf_token %}
-                        <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                        <button class="mt-10 ui negative basic button"><i class="minus square icon"></i>Remove friendship</button>
-                    </form>
-                    {% endif %}
-
+                <div class="description">
+                    {{obj.bio}}
                 </div>
             </div>
+            <div class="extra content">
+                <span class="right floated">
+              Joined 20{{obj.created_str}}
+            </span>
+                <span>
+              <i class="user icon"></i>
+              {{obj.get_friends_no}} Friends |
+              <i class="sticky note icon"></i>
+              {{obj.get_posts_no}} Posts
+            </span>
+            </div>
         </div>
-    </div>
-    {% endfor %}</div> {% endblock content %} {% block scripts %}
+
+        {% endfor %}</div>
+</div> {% endblock content %} {% block scripts %}
 <script>
 </script>
 

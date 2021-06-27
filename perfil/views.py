@@ -123,15 +123,6 @@ def reject_invitation(request):
 
 
 
-@login_required
-def invite_profiles_list_view(request):
-    user = request.user
-    qs = Profile.objects.get_all_profiles_to_invite(user)
-
-    context = {'qs': qs}
-
-    return render(request, 'perfil/to_invite_list.html', context)
-
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
@@ -140,6 +131,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, slug=None):
         slug = self.kwargs.get('slug')
         profile = Profile.objects.get(slug=slug)
+        
         return profile
 
     def get_context_data(self, **kwargs):
@@ -156,13 +148,14 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             rel_receiver.append(item.receiver.username)
         for item in rel_s:
             rel_sender.append(item.sender.username)
-                
+            
         context['c_form'] = c_form
         context['posts'] = detailuser_posts_qs
         context["rel_receiver"] = rel_receiver
         context["rel_sender"] = rel_sender
         context['is_empty'] = False
         context['posts'] = self.get_object().get_all_authors_posts()
+        context['friends_qs'] = self.get_object().get_friends()
         context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
 
         return context
