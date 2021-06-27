@@ -16,15 +16,16 @@
     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon" />
+
     <title>Timelines - {% block title %}{% endblock title %}</title>
 
 
 </head>
 
 <body>
-    {% if request.user.is_authenticated %}
-        {% include 'main/navbar.html' %}
-    {% endif %}
+    {% if request.user.is_authenticated %} {% include 'main/navbar.html' %} {% endif %}
     <div class="ui container">
         {% block content %} {% endblock content %}
     </div>
