@@ -174,7 +174,7 @@
         </div>
         <div class="ui bottom attached tab segment" data-tab="second">
             {% if no_friends == True %}
-            <h3>You don't have friends yet! <a href="{% url 'perfil:invite-profiles-view' %}" class="ui positive basic button">Invite some</a></h3>
+            <h3>You don't have friends yet!</h3>
             {% else %} {% for friend in friendlist %}
             <div class="ui segment">
                 <div class="ui grid">
