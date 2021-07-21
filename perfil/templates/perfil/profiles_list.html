@@ -14,25 +14,6 @@
             </div>
             <div class="content">
                 <div class="header"><a href="{{ obj.get_absolute_url}}">{{obj.first_name}} {{obj.last_name}} <span class="small_text">@{{obj.username}}</span></a>
-                    <div class="right floated meta">
-                        {% if obj.username not in rel_receiver and request.user not in rel_sender %}
-                        <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
-                            <!-- Enviar pedido -->
-                            {% csrf_token %}
-                            <input id="profile-key" type="hidden" name="profile_pk" value="{{obj.pk}}">
-                            <button type="submit" class="ui positive basic button"><i class="user plus icon "></i></button>
-                        </form>
-                        {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
-                        <!-- Pedido enviado por nós ainda em espera -->
-                        <button type="submit" class="ui disabled basic button"><i class="user plus icon "></i></button> {% endif %} {% if request.user in obj.friends.all %}
-                        <form action="{% url 'perfil:remove_friend' %}" method="POST">
-                            <!-- Remover amizade -->
-                            {% csrf_token %}
-                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                            <button type="submit" class="ui basic negative button"><i class="user times icon "></i></button>
-                        </form>
-                        {% endif %}
-                    </div>
                 </div>
 
                 <div class="description">
@@ -49,6 +30,27 @@
               <i class="sticky note icon"></i>
               {{obj.get_posts_no}} Posts
             </span>
+            </div>
+            <div class="extra content">
+                <span>
+                    {% if obj.username not in rel_receiver and request.user not in rel_sender %}
+                    <form class="send_invite" action="{% url 'perfil:send_invite' %}" method="POST">
+                        <!-- Enviar pedido -->
+                        {% csrf_token %}
+                        <input id="profile-key" type="hidden" name="profile_pk" value="{{obj.pk}}">
+                        <button type="submit" class="ui positive basic button max-content-width">Add Friend&nbsp;&nbsp;&nbsp;<i class="user plus icon "></i></button>
+                    </form>
+                    {% endif %} {% if obj.username in rel_receiver and request.user not in obj.friends.all %}
+                    <!-- Pedido enviado por nós ainda em espera -->
+                    <button type="submit" class="ui disabled basic button max-content-width">Waiting for approval&nbsp;&nbsp;&nbsp;<i class="user plus icon "></i></button> {% endif %} {% if request.user in obj.friends.all %}
+                    <form action="{% url 'perfil:remove_friend' %}" method="POST">
+                        <!-- Remover amizade -->
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                        <button type="submit" class="ui basic negative button max-content-width">Remove friend&nbsp;&nbsp;&nbsp;<i class="user times icon "></i></button>
+                    </form>
+                    {% endif %}
+                </span>
             </div>
         </div>
 
