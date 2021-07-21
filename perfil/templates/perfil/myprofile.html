@@ -27,36 +27,6 @@
 <!-- MODAL SETTINGS FORM FIM -->
 
 
-<!-- FRIEND LIST POPUP -->
-<div class="ui modal friendlist">
-    <div class="header">
-        {{profile.username}}'s friendlist
-    </div>
-    <div class="ui grid">
-        <div class="row">
-            <div class="ten wide column">
-                <table class="ui table">
-                    <tbody>
-                        {% for friend in profile.get_friends %}
-                        <tr>
-                            <td>{{friend}}</td>
-                        </tr>
-                    </tbody>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="actions">
-        <button class="ui negative right labeled icon button mb-7" type="submit">
-            Close
-            <i class="checkmark icon"></i>
-        </button>
-        </form>
-    </div>
-</div>
-
-<!-- FRIEND LIST POPUP FIM -->
 
 <div class="ui grid pt-100">
     <div class="five wide column">
